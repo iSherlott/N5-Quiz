@@ -1,0 +1,17 @@
+{
+  "name": "Quiz JLPT N5",
+  "short_name": "N5",
+  "description": "Quiz intensivo de japonês para a prova JLPT N5 — acertos, erros e nível.",
+  "lang": "pt-BR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F3EDE1",
+  "theme_color": "#C8412B",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

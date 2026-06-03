@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+<title>五 · Quiz JLPT N5</title>
+<meta name="theme-color" content="#C8412B" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="N5" />
+<link rel="apple-touch-icon" href="icon-180.png" />
+<link rel="icon" href="favicon-32.png" sizes="32x32" />
+<link rel="manifest" href="manifest.webmanifest" />
+<style>
+  :root{
+    --paper:#F3EDE1; --paper2:#EAE2D2; --card:#FBF7EF; --ink:#211E19; --ink2:#6A6155;
+    --line:#DBD0BC; --line2:#C9BCA4; --shu:#C8412B; --shu2:#A02C1B; --matcha:#5E7A4F;
+    --matcha2:#46603a; --gold:#B0894C; --shadow:rgba(40,30,18,.10);
+    --sys:#3A6EA5; --sysglow:rgba(58,110,165,.30);
+    --jp:"Hiragino Mincho ProN","YuMincho","Yu Mincho",serif;
+    --display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --ui:"Avenir Next","Avenir","Hiragino Sans","Helvetica Neue",sans-serif;
+    --r:18px;
+  }
+  html[data-theme="dark"]{
+    --paper:#15120E; --paper2:#1C1812; --card:#221D16; --ink:#F0E8D9; --ink2:#B4AA97;
+    --line:#352E24; --line2:#473d30; --shu:#E0654D; --shu2:#c24a33; --matcha:#8AAE76;
+    --matcha2:#6f9460; --gold:#C9A463; --shadow:rgba(0,0,0,.45);
+    --sys:#6F9FD0; --sysglow:rgba(111,159,208,.28);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; height:100%;}
+  body{
+    background:var(--paper); color:var(--ink); font-family:var(--ui);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden; line-height:1.5;
+    transition:background .4s ease, color .4s ease;
+  }
+  /* textura washi sutil */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/></svg>");
+    mix-blend-mode:multiply;
+  }
+  html[data-theme="dark"] body::before{mix-blend-mode:screen; opacity:.4;}
+  #app{position:relative; z-index:1; max-width:540px; margin:0 auto; min-height:100%;
+    padding:calc(env(safe-area-inset-top) + 8px) calc(env(safe-area-inset-right) + 18px)
+            calc(env(safe-area-inset-bottom) + 22px) calc(env(safe-area-inset-left) + 18px);
+    display:flex; flex-direction:column;}
+  /* topbar */
+  .topbar{display:flex; align-items:center; justify-content:space-between; padding:6px 2px 14px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:.02em;}
+  .seal{width:34px; height:34px; border-radius:9px; background:var(--shu); color:var(--paper);
+    display:grid; place-items:center; font-family:var(--jp); font-size:21px; line-height:1;
+    box-shadow:0 3px 10px var(--shadow); flex:0 0 auto;}
+  .brand small{display:block; font-family:var(--ui); font-weight:600; font-size:11px; color:var(--ink2); letter-spacing:.14em; text-transform:uppercase;}
+  .brand b{font-family:var(--display); font-weight:600; font-size:17px;}
+  .icon-btn{appearance:none; border:1px solid var(--line); background:var(--card); color:var(--ink);
+    width:40px; height:40px; border-radius:12px; font-size:18px; display:grid; place-items:center;
+    cursor:pointer; transition:transform .15s, background .3s, border-color .3s;}
+  .icon-btn:active{transform:scale(.92);}
+  .top-actions{display:flex; align-items:center; gap:8px;}
+  #statusBtn svg{display:block; color:var(--sys);}
+  /* cards */
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+    padding:18px; box-shadow:0 10px 30px -18px var(--shadow);}
+  .stack{display:flex; flex-direction:column; gap:14px;}
+  .view{animation:fade .45s ease both;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+  .reveal{animation:fade .5s ease both;}
+  /* hero nivel */
+  .kicker{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink2); font-weight:600;}
+  .level-title{font-family:var(--display); font-size:27px; font-weight:600; margin:6px 0 2px; letter-spacing:.01em;}
+  .level-sub{font-size:12.5px; color:var(--ink2);}
+  .bar{height:12px; border-radius:999px; background:var(--paper2); border:1px solid var(--line); overflow:hidden; margin-top:14px; position:relative;}
+  .bar > i{display:block; height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg,var(--shu2),var(--shu)); transition:width 1s cubic-bezier(.22,1,.36,1);}
+  .bar.matcha > i{background:linear-gradient(90deg,var(--matcha2),var(--matcha));}
+  .pct-row{display:flex; justify-content:space-between; margin-top:7px; font-size:12px; color:var(--ink2);}
+  .pct-row b{font-family:var(--display); color:var(--ink); font-size:14px;}
+  /* stats chips */
+  .stats{display:grid; grid-template-columns:repeat(5,1fr); gap:8px;}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:11px 6px; text-align:center;}
+  .stat .n{font-family:var(--display); font-size:19px; font-weight:600; line-height:1;}
+  .stat .l{font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink2); margin-top:5px;}
+  .stat.ok .n{color:var(--matcha);} .stat.no .n{color:var(--shu);}
+  .stat{appearance:none; width:100%; font-family:inherit; color:inherit; cursor:default; position:relative;
+    transition:transform .12s, border-color .2s, box-shadow .2s;}
+  .stat.act{cursor:pointer;}
+  .stat.act:active{transform:scale(.94);}
+  .stat.act::after{content:""; position:absolute; left:50%; bottom:5px; transform:translateX(-50%);
+    width:13px; height:2px; border-radius:2px; background:var(--sys); opacity:.65;}
+  .stat.act:active{border-color:var(--sys); box-shadow:0 0 0 1px var(--sys) inset;}
+  /* ---- menu de erros ---- */
+  .errlist{display:flex; flex-direction:column; gap:9px;}
+  .errrow{appearance:none; display:flex; align-items:center; gap:11px; width:100%; text-align:left; cursor:pointer;
+    background:var(--card); border:1px solid var(--line); border-radius:13px; padding:12px 13px; font-family:var(--ui); color:var(--ink);
+    transition:transform .12s, border-color .2s;}
+  .errrow:active{transform:scale(.99); border-color:var(--shu);}
+  .errrow .tag{flex:0 0 auto;}
+  .errrow .errq{flex:1; font-family:var(--jp); font-size:13.5px; line-height:1.4; min-width:0;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .errrow .errgo{flex:0 0 auto; color:var(--ink2); font-size:20px; line-height:1;}
+  /* filtro de erros (chips roláveis) */
+  .errfilter{flex-wrap:nowrap; overflow-x:auto; gap:7px; padding:2px 2px 8px; margin:0 -2px;
+    -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity;}
+  .errfilter .chip{flex:0 0 auto; font-size:12px; padding:7px 12px; scroll-snap-align:start;}
+  .errfilter .chip[aria-pressed="true"]{background:var(--sys); border-color:var(--sys); color:#fff;}
+  /* paginação */
+  .pager{display:flex; align-items:center; justify-content:center; gap:16px; margin:4px 0 2px;}
+  .pg-btn{appearance:none; width:42px; height:42px; border-radius:12px; border:1px solid var(--line2);
+    background:var(--card); color:var(--ink); font-size:20px; line-height:1; cursor:pointer;
+    display:grid; place-items:center; transition:transform .12s, border-color .2s, opacity .2s;}
+  .pg-btn:active{transform:scale(.92); border-color:var(--sys);}
+  .pg-btn[disabled]{opacity:.35; cursor:default;}
+  .pg-info{font-family:var(--display); font-weight:700; font-size:15px; color:var(--ink2); font-variant-numeric:tabular-nums; min-width:54px; text-align:center;}
+  /* ---- barra de rolagem (estilo Sistema) ---- */
+  *{scrollbar-width:thin; scrollbar-color:color-mix(in srgb,var(--sys) 60%, var(--line2)) transparent;}
+  ::-webkit-scrollbar{width:10px; height:8px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{border-radius:999px; border:2.5px solid transparent; background-clip:padding-box;
+    background-color:color-mix(in srgb,var(--sys) 55%, var(--line2));}
+  ::-webkit-scrollbar-thumb:hover{background-color:var(--sys);}
+  /* ---- menu de recordes ---- */
+  .recrow{display:flex; align-items:center; gap:11px; padding:9px 2px; border-bottom:1px solid var(--line);}
+  .recrow:last-child{border-bottom:none;}
+  .reck{font-family:var(--jp); width:26px; flex:0 0 auto; text-align:center; color:var(--sys); font-size:17px;}
+  .recn{flex:1; font-size:13.5px; color:var(--ink);}
+  .recv{font-family:var(--display); font-weight:700; font-size:15px; color:var(--gold); font-variant-numeric:tabular-nums;}
+  .recv.none{color:var(--ink2); font-weight:600;}
+  /* section title */
+  .sec{display:flex; align-items:center; gap:10px; margin:2px 2px -4px;}
+  .sec h3{font-family:var(--display); font-weight:600; font-size:15px; margin:0;}
+  .sec .ln{flex:1; height:1px; background:var(--line);}
+  .sec button{appearance:none; background:none; border:none; color:var(--ink2); font-size:12px; cursor:pointer; font-family:var(--ui);}
+  /* areas */
+  .area{display:flex; align-items:center; gap:10px; padding:7px 0;}
+  .area .nm{width:120px; font-size:12.5px; color:var(--ink); flex:0 0 auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .area .ab{flex:1; height:8px; border-radius:999px; background:var(--paper2); border:1px solid var(--line); overflow:hidden;}
+  .area .ab > i{display:block; height:100%; width:0; background:var(--gold); transition:width .8s ease;}
+  .area .pc{width:38px; text-align:right; font-size:11.5px; color:var(--ink2); font-variant-numeric:tabular-nums;}
+  /* chips */
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{appearance:none; border:1px solid var(--line2); background:var(--paper2); color:var(--ink);
+    padding:9px 13px; border-radius:999px; font-size:13px; cursor:pointer; font-family:var(--ui);
+    transition:all .18s;}
+  .chip[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .lbl{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2); font-weight:600; margin:2px 2px 8px;}
+  /* portões de categoria (estilo Sistema) */
+  .gate-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:9px;}
+  .gate{position:relative; overflow:hidden; appearance:none; cursor:pointer; font-family:var(--ui);
+    display:flex; flex-direction:column; align-items:center; gap:6px; padding:13px 6px 11px;
+    border:1px solid var(--line2); background:var(--paper2); border-radius:14px;
+    transition:transform .15s, border-color .2s, box-shadow .25s, background .25s;}
+  .gate::before{content:""; position:absolute; inset:0; border-radius:14px; pointer-events:none;
+    background:radial-gradient(120% 70% at 50% -10%, var(--sysglow), transparent 70%); opacity:0; transition:opacity .25s;}
+  .gate .g-k{font-family:var(--jp); font-size:25px; line-height:1; color:var(--ink2); transition:color .2s, transform .2s;}
+  .gate .g-n{font-size:11px; line-height:1.2; color:var(--ink2); text-align:center; transition:color .2s;}
+  .gate .g-chk{position:absolute; top:6px; right:7px; font-size:11px; color:var(--sys); opacity:0; transform:scale(.5); transition:opacity .2s, transform .2s;}
+  .gate:active{transform:scale(.95);}
+  .gate[aria-pressed="true"]{border-color:var(--sys); background:var(--card);
+    box-shadow:inset 0 0 0 1px var(--sys), 0 6px 18px var(--sysglow);}
+  .gate[aria-pressed="true"]::before{opacity:1;}
+  .gate[aria-pressed="true"] .g-k{color:var(--sys); transform:translateY(-1px);}
+  .gate[aria-pressed="true"] .g-n{color:var(--ink); font-weight:600;}
+  .gate[aria-pressed="true"] .g-chk{opacity:1; transform:scale(1);}
+  /* intensidade da caçada (controle segmentado) */
+  .seg{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
+  .seg-opt{position:relative; overflow:hidden; appearance:none; cursor:pointer; font-family:var(--ui);
+    display:flex; flex-direction:column; align-items:center; gap:2px; padding:10px 4px 9px;
+    border:1px solid var(--line2); background:var(--paper2); border-radius:13px;
+    transition:transform .15s, border-color .2s, box-shadow .25s, background .25s;}
+  .seg-opt::before{content:""; position:absolute; inset:0; border-radius:13px; pointer-events:none;
+    background:radial-gradient(120% 70% at 50% -10%, var(--sysglow), transparent 70%); opacity:0; transition:opacity .25s;}
+  .seg-opt .q-k{font-family:var(--jp); font-size:14px; line-height:1; color:var(--ink2); transition:color .2s;}
+  .seg-opt .q-n{font-size:19px; font-weight:700; line-height:1.05; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .seg-opt .q-t{font-size:10px; letter-spacing:.04em; color:var(--ink2); transition:color .2s;}
+  .seg-opt:active{transform:scale(.95);}
+  .seg-opt[aria-pressed="true"]{border-color:var(--sys); background:var(--card);
+    box-shadow:inset 0 0 0 1px var(--sys), 0 6px 18px var(--sysglow);}
+  .seg-opt[aria-pressed="true"]::before{opacity:1;}
+  .seg-opt[aria-pressed="true"] .q-k{color:var(--sys);}
+  .seg-opt[aria-pressed="true"] .q-t{color:var(--ink); font-weight:600;}
+  /* buttons */
+  .btn{appearance:none; border:none; width:100%; padding:16px; border-radius:15px; font-size:16.5px;
+    font-weight:600; font-family:var(--ui); cursor:pointer; letter-spacing:.01em;
+    transition:transform .15s, filter .2s, background .3s;}
+  .btn:active{transform:scale(.985);}
+  .btn.primary{background:var(--shu); color:#fff; box-shadow:0 12px 26px -12px var(--shu);}
+  .btn.primary:active{filter:brightness(.96);}
+  .btn.ghost{background:var(--card); color:var(--ink); border:1px solid var(--line);}
+  .btn.mini{padding:13px; font-size:14.5px; border-radius:13px;}
+  .txt-btn{display:block; margin:6px auto 0; background:none; border:none; color:var(--ink2);
+    font-size:12px; text-decoration:underline; cursor:pointer; font-family:var(--ui);}
+  .spacer{flex:1 1 auto;}
+  /* quiz */
+  .qhead{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:2px 2px 10px;}
+  .score{display:flex; gap:12px; font-size:14px; font-variant-numeric:tabular-nums; font-weight:600;}
+  .score .c{color:var(--matcha);} .score .w{color:var(--shu);}
+  .qbar{height:5px; border-radius:999px; background:var(--paper2); overflow:hidden; margin:0 2px 16px;}
+  .qbar > i{display:block; height:100%; width:0; background:var(--ink); transition:width .4s ease;}
+  .tag{display:inline-block; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--shu);
+    border:1px solid var(--line2); border-radius:999px; padding:4px 10px; font-weight:600;}
+  .q{font-family:var(--jp); font-size:25px; line-height:1.55; margin:16px 2px 4px; font-weight:500; word-break:break-word;}
+  .q.small{font-size:20px;}
+  .opts{display:flex; flex-direction:column; gap:11px; margin-top:18px;}
+  .opt{appearance:none; text-align:left; display:flex; align-items:center; gap:13px; width:100%;
+    background:var(--card); border:1.5px solid var(--line2); color:var(--ink); padding:15px 15px;
+    border-radius:15px; font-size:17px; font-family:var(--jp); cursor:pointer; line-height:1.4;
+    transition:transform .12s, border-color .2s, background .2s; word-break:break-word;}
+  .opt:active{transform:scale(.99);}
+  .opt .mk{flex:0 0 auto; width:27px; height:27px; border-radius:50%; border:1.5px solid var(--line2);
+    display:grid; place-items:center; font-family:var(--ui); font-size:13px; font-weight:700; color:var(--ink2);}
+  .opt.correct{border-color:var(--matcha); background:color-mix(in srgb,var(--matcha) 12%, var(--card));}
+  .opt.correct .mk{background:var(--matcha); color:#fff; border-color:var(--matcha);}
+  .opt.wrong{border-color:var(--shu); background:color-mix(in srgb,var(--shu) 10%, var(--card));}
+  .opt.wrong .mk{background:var(--shu); color:#fff; border-color:var(--shu);}
+  .opt[disabled]{cursor:default;}
+  .opt.dim{opacity:.55;}
+  .qfoot{margin-top:18px;}
+  /* result ring */
+  .ring-wrap{display:grid; place-items:center; margin:6px 0 4px;}
+  .ring{width:172px; height:172px; border-radius:50%; display:grid; place-items:center;
+    background:conic-gradient(var(--shu) calc(var(--p)*1%), var(--line) 0); transition:--p 1s;}
+  .ring::after{content:""; position:absolute;}
+  .ring .inner{width:138px; height:138px; border-radius:50%; background:var(--card); display:grid; place-items:center; text-align:center;}
+  .ring .big{font-family:var(--display); font-size:40px; font-weight:600; line-height:1;}
+  .ring .cap{font-size:11px; color:var(--ink2); letter-spacing:.1em; text-transform:uppercase; margin-top:4px;}
+  .res-line{text-align:center; color:var(--ink2); font-size:13.5px; margin-top:4px;}
+  .res-line b{color:var(--ink);}
+  /* review */
+  .rev{display:flex; flex-direction:column; gap:12px;}
+  .rev .item{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px;}
+  .rev .rq{font-family:var(--jp); font-size:17px; line-height:1.5; margin-bottom:9px; word-break:break-word;}
+  .rev .ans{font-size:13.5px; display:flex; gap:8px; align-items:baseline; font-family:var(--jp);}
+  .rev .ans .k{font-family:var(--ui); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink2); width:62px; flex:0 0 auto;}
+  .rev .yours{color:var(--shu);} .rev .right{color:var(--matcha);}
+  .empty{text-align:center; color:var(--ink2); padding:40px 10px; font-size:14px;}
+  .err{margin:40px auto; max-width:420px; text-align:center; color:var(--ink2);}
+  @media (min-width:520px){ .q{font-size:27px;} }
+  /* ---- Sistema / status (Solo Leveling) ---- */
+  .card.system{position:relative; overflow:hidden;}
+  .card.system::before{content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(130% 90% at 0% 0%, var(--sysglow), transparent 62%);}
+  .card.system > *{position:relative;}
+  .sys-top{display:flex; align-items:center; gap:14px; margin:6px 0 2px;}
+  .rankbadge{width:54px; height:54px; flex:0 0 auto; border-radius:14px; display:grid; place-items:center;
+    font-family:var(--display); font-weight:700; font-size:23px; color:#fff; letter-spacing:.02em;
+    background:linear-gradient(145deg,var(--sys),var(--shu)); box-shadow:0 8px 20px -10px var(--sys);}
+  .sys-id{min-width:0;}
+  .title-line{font-family:var(--jp); color:var(--gold); font-size:13.5px; margin-top:3px;}
+  /* radar hexagonal de atributos */
+  .radar{display:block; width:100%; max-width:330px; height:auto; margin:0 auto 4px; overflow:visible;}
+  .radar .ring{fill:none; stroke:var(--line); stroke-width:1;}
+  .radar .spoke{stroke:var(--line2); stroke-width:1;}
+  .radar .rdata{fill:color-mix(in srgb,var(--sys) 24%, transparent); stroke:var(--sys); stroke-width:2; stroke-linejoin:round;}
+  .radar .rdot{fill:var(--sys); stroke:var(--card); stroke-width:1.5;}
+  .radar .rkanji{font-family:var(--jp); font-size:14px; fill:var(--ink);}
+  .radar .rval{font-family:var(--display); font-size:12px; font-weight:700; fill:var(--sys);}
+  /* legenda com barras que crescem */
+  .alegend{display:flex; flex-direction:column; gap:9px; margin-top:8px;}
+  .arow{display:flex; align-items:center; gap:10px;}
+  .arow .ak{font-family:var(--jp); width:30px; flex:0 0 auto; text-align:center; color:var(--sys); font-size:14px;}
+  .arow .an{width:98px; flex:0 0 auto; font-size:12.5px; color:var(--ink2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .arow .abar{flex:1; height:8px; border-radius:999px; background:var(--paper2); border:1px solid var(--line); overflow:hidden;}
+  .arow .abar > i{display:block; height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,var(--sys),var(--shu)); transition:width .8s cubic-bezier(.22,1,.36,1);}
+  .arow .av{width:30px; text-align:right; font-family:var(--display); font-weight:600; font-size:15px; font-variant-numeric:tabular-nums;}
+  .titles{display:flex; flex-direction:column; gap:8px;}
+  .title-row{appearance:none; text-align:left; width:100%; background:var(--paper2); border:1px solid var(--line);
+    border-radius:12px; padding:11px 13px; cursor:pointer; font-family:var(--ui); color:var(--ink); transition:all .18s;}
+  .title-row .tt{display:block; font-weight:600; font-size:14px;}
+  .title-row .td{display:block; font-size:11.5px; color:var(--ink2); margin-top:2px;}
+  .title-row.locked{opacity:.5; cursor:default; filter:grayscale(.4);}
+  .title-row.equipped{border-color:var(--sys); background:color-mix(in srgb,var(--sys) 12%,var(--card)); box-shadow:0 0 0 1px var(--sys) inset;}
+  /* seção minimizável + card de título equipado + folha (menu) */
+  .sec-tog{cursor:pointer; user-select:none; -webkit-user-select:none;}
+  .sec-tog .tog{color:var(--ink2); font-size:12px; flex:0 0 auto;}
+  .title-current{display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%;
+    text-align:left; appearance:none; cursor:pointer; font-family:var(--ui); color:var(--ink); transition:transform .15s;}
+  .title-current:active{transform:scale(.99);}
+  .title-current .tc-lbl{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2);}
+  .title-current .tc-name{font-family:var(--jp); font-size:16px; color:var(--gold); margin-top:3px;}
+  .title-current .tc-arrow{font-size:26px; line-height:1; color:var(--ink2); flex:0 0 auto;}
+  .title-line{cursor:pointer;}
+  .sheet{max-width:392px; width:100%; max-height:78vh; overflow:auto; text-align:left; -webkit-overflow-scrolling:touch;}
+  .sheet .x{appearance:none; background:none; border:none; color:var(--ink2); font-size:15px; cursor:pointer; flex:0 0 auto; padding:4px;}
+  .score .xp{color:var(--sys);}
+  .xppop{position:fixed; left:50%; top:36%; transform:translateX(-50%); z-index:50;
+    font-family:var(--display); font-weight:700; font-size:22px; color:var(--sys);
+    text-shadow:0 2px 14px var(--sysglow); pointer-events:none; animation:xpfloat .9s ease forwards;}
+  @keyframes xpfloat{0%{opacity:0; transform:translate(-50%,8px) scale(.85);}20%{opacity:1;}100%{opacity:0; transform:translate(-50%,-36px) scale(1.05);}}
+  /* notificação do Sistema */
+  .sysmodal{position:fixed; inset:0; z-index:100; background:rgba(10,8,5,.55);
+    display:grid; place-items:center; padding:24px; animation:fade .25s ease both; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);}
+  .sysnote{max-width:340px; width:100%; text-align:center; border:1px solid var(--sys);
+    box-shadow:0 0 0 1px var(--sys) inset, 0 22px 64px -22px var(--sys);}
+  .sysnote .kicker{color:var(--sys); letter-spacing:.22em;}
+  .sysnote .note-body{font-family:var(--jp); font-size:18px; line-height:1.55; margin:12px 0 18px; color:var(--ink); word-break:break-word;}
+  .sysnote .note-sub{font-family:var(--ui); font-size:12.5px; color:var(--ink2);}
+  /* ---- modo de caçada (toggle) ---- */
+  .seg-opt.mode .q-n{font-size:13.5px; font-weight:700; letter-spacing:.01em;}
+  /* ---- HUD de sobrevivência (vidas + temporizador) ---- */
+  .hud{display:flex; align-items:center; gap:14px; margin:0 2px 14px; animation:fade .4s ease both;}
+  .lives{display:flex; gap:5px; align-items:center; flex:0 0 auto;}
+  .heart{font-size:19px; line-height:1; color:var(--shu);
+    transition:transform .3s, opacity .3s, filter .3s; will-change:transform;}
+  .heart.full{animation:hbeat 1.6s ease-in-out infinite;}
+  .heart.lost{opacity:.22; filter:grayscale(1) brightness(.8); transform:scale(.78); animation:none;}
+  .heart.breaking{animation:hbreak .5s cubic-bezier(.36,.07,.19,.97) forwards;}
+  @keyframes hbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.16);}}
+  @keyframes hbreak{0%{transform:scale(1) rotate(0);}25%{transform:scale(1.45) rotate(-10deg);}
+    55%{transform:scale(1.1) rotate(8deg);}100%{transform:scale(.78) rotate(0); opacity:.22; filter:grayscale(1);}}
+  .timer{flex:1; display:flex; align-items:center; gap:9px; min-width:0;}
+  .tbar{flex:1; height:9px; border-radius:999px; background:var(--paper2);
+    border:1px solid var(--line); overflow:hidden;}
+  .tbar > i{display:block; height:100%; width:100%; border-radius:999px;
+    background:linear-gradient(90deg,var(--matcha2),var(--matcha));
+    transition:width .12s linear, background .3s;}
+  .tnum{font-family:var(--display); font-weight:700; font-size:15px; font-variant-numeric:tabular-nums;
+    width:36px; text-align:right; flex:0 0 auto; color:var(--ink); transition:color .3s;}
+  .timer.low .tbar > i{background:linear-gradient(90deg,var(--shu2),var(--shu));}
+  .timer.low .tnum{color:var(--shu);}
+  .timer.low{animation:tpulse .85s ease-in-out infinite;}
+  @keyframes tpulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+  .timepop{position:fixed; left:50%; top:29%; transform:translateX(-50%); z-index:50;
+    font-family:var(--display); font-weight:700; font-size:21px; pointer-events:none;
+    animation:xpfloat .9s ease forwards;}
+  .timepop.plus{color:var(--matcha); text-shadow:0 2px 14px rgba(94,122,79,.4);}
+  .timepop.minus{color:var(--shu); text-shadow:0 2px 14px rgba(200,65,43,.4);}
+  /* ---- animações das opções ---- */
+  @keyframes optin{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+  .opts .opt{animation:optin .34s ease both;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.035);}100%{transform:scale(1);}}
+  @keyframes shake{10%,90%{transform:translateX(-1px);}20%,80%{transform:translateX(2px);}
+    30%,50%,70%{transform:translateX(-5px);}40%,60%{transform:translateX(5px);}}
+  .opt.correct{animation:pop .42s ease;}
+  .opt.wrong{animation:shake .42s ease;}
+  /* flash de game over */
+  .sysnote.danger{border-color:var(--shu); box-shadow:0 0 0 1px var(--shu) inset, 0 22px 64px -22px var(--shu);}
+  .sysnote.danger .kicker{color:var(--shu);}
+  /* ---- flashcards ---- */
+  .flash-intro{font-size:13.5px; color:var(--ink2); margin:2px 2px 12px;}
+  .gate.deck{padding:15px 8px 13px;}
+  .gate.deck .deck-c{font-size:10px; color:var(--ink2); margin-top:1px;}
+  .gate.deck .deck-b{position:absolute; top:6px; right:8px; font-size:9.5px; color:var(--gold); font-weight:700;}
+  .gate.deck .deck-score{margin-top:5px; font-family:var(--display); font-weight:700; font-size:13px; color:var(--gold); font-variant-numeric:tabular-nums;}
+  .flip{perspective:1200px; cursor:pointer; margin:16px 0 4px;}
+  .flip-inner{position:relative; width:100%; min-height:260px;
+    transition:transform .55s cubic-bezier(.22,1,.36,1); transform-style:preserve-3d;}
+  .flip.flipped .flip-inner{transform:rotateY(180deg);}
+  .flip-face{position:absolute; inset:0; -webkit-backface-visibility:hidden; backface-visibility:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:24px;
+    box-shadow:0 10px 30px -18px var(--shadow);}
+  .flip-face.front{background:linear-gradient(160deg,var(--card),var(--paper2));}
+  .flip-face.back{transform:rotateY(180deg); border-color:var(--sys);
+    box-shadow:inset 0 0 0 1px var(--sys), 0 12px 30px -16px var(--sysglow);}
+  .fword{font-family:var(--jp); font-size:60px; line-height:1.18; color:var(--ink); text-align:center; word-break:break-word;}
+  .fword.plain{font-size:72px;}
+  .fword ruby rt{font-size:.30em; color:var(--sys); font-weight:700; font-family:var(--ui); letter-spacing:.02em;}
+  .fpt{font-size:16px; color:var(--ink2); text-align:center;}
+  .ftip{font-size:11.5px; color:var(--ink2); letter-spacing:.06em; text-transform:uppercase; opacity:.8;}
+  .fbadge{font-family:var(--jp); font-size:12px; color:var(--sys);}
+  .fnav{display:flex; gap:10px; margin-top:18px;}
+  .fnav .btn{flex:1;}
+  /* mini-game de memória */
+  .fgprompt{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    margin:18px 0 4px; min-height:130px;}
+  .fgprompt .fword{font-size:54px;}
+  .fgask{font-size:11.5px; color:var(--ink2); letter-spacing:.14em; text-transform:uppercase;}
+  .fgxp{font-size:12.5px; color:var(--sys); font-weight:700; margin-top:2px;}
+  .opt.fgopt{justify-content:center; font-size:21px; font-family:var(--jp);}
+  .combo{color:var(--shu); font-weight:800; font-family:var(--display); font-size:16px; margin-left:8px;}
+  .score .gold{color:var(--gold);}
+  .recbadge{display:inline-block; margin-top:6px; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold); border:1px solid var(--gold); border-radius:999px; padding:3px 10px; font-weight:700;}
+  .bigscore{font-family:var(--display); font-size:46px; font-weight:700; line-height:1; color:var(--gold); text-align:center;}
+  /* ---- furigana geral (menus, status) ---- */
+  ruby rt{font-size:.52em; color:var(--ink2); font-family:var(--ui); font-weight:600; line-height:1; letter-spacing:.01em;}
+  h3 ruby rt, .lbl ruby rt, .kicker ruby rt{color:var(--ink2);}
+  .arow .ak ruby rt{font-size:.42em; color:var(--sys);}
+  .arow .ak{width:38px;}
+  .g-k ruby rt{font-size:.30em; color:inherit; font-weight:700;}
+  .q ruby rt{font-size:.42em; color:var(--shu); font-weight:700; font-family:var(--ui); letter-spacing:0;}
+  .q.small ruby rt{font-size:.44em;}
+  /* ---- menu de títulos (cards) ---- */
+  .titlegrid{display:flex; flex-direction:column; gap:10px;}
+  .tcard{position:relative; display:flex; align-items:center; gap:13px; width:100%; text-align:left; appearance:none;
+    background:var(--paper2); border:1px solid var(--line); border-radius:14px; padding:12px 14px; cursor:pointer;
+    font-family:var(--ui); color:var(--ink); overflow:hidden;
+    transition:transform .15s, border-color .2s, box-shadow .25s, background .25s;}
+  .tcard::before{content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(130% 90% at 0% 0%, var(--sysglow), transparent 60%); opacity:0; transition:opacity .25s;}
+  .tcard:active{transform:scale(.99);}
+  .tseal{position:relative; flex:0 0 auto; width:44px; height:44px; border-radius:12px; display:grid; place-items:center;
+    font-family:var(--jp); font-size:21px; line-height:1; color:#fff;
+    background:linear-gradient(145deg,var(--sys),var(--shu)); box-shadow:0 6px 16px -8px var(--sys);}
+  .tinfo{position:relative; min-width:0; flex:1;}
+  .tinfo .tt{display:block; font-weight:600; font-size:14.5px; line-height:1.25;}
+  .tinfo .td{display:block; font-size:11.5px; color:var(--ink2); margin-top:2px;}
+  .tflag{position:relative; flex:0 0 auto; font-size:10px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+    color:var(--ink2); border:1px solid var(--line2); border-radius:999px; padding:3px 9px;}
+  .tflag.on{color:var(--sys); border-color:var(--sys);}
+  .tcard.locked{opacity:.5; cursor:default; filter:grayscale(.6);}
+  .tcard.locked .tseal{background:var(--line2); color:var(--ink2); box-shadow:none; font-size:16px;}
+  .tcard.equipped{border-color:var(--sys); background:var(--card);
+    box-shadow:inset 0 0 0 1px var(--sys), 0 8px 22px var(--sysglow);}
+  .tcard.equipped::before{opacity:1;}
+  /* ---- bolinhas de luz (3 por portão): posição=precisão, cor=intensidade ---- */
+  .medals{display:flex; gap:4px; justify-content:center; margin-top:5px;}
+  .medal{width:8px; height:8px; border-radius:50%; background:var(--line2); transition:background .3s, box-shadow .3s; opacity:.55;}
+  .medal.lv1{background:#E0B33A; opacity:1; box-shadow:0 0 6px rgba(224,179,58,.75);}   /* Investida 10 — amarelo */
+  .medal.lv2{background:#5FB8E0; opacity:1; box-shadow:0 0 6px rgba(95,184,224,.75);}   /* Caçada 30 — azul claro */
+  .medal.lv3{background:#A06CD5; opacity:1; box-shadow:0 0 7px rgba(160,108,213,.8);}   /* Provação 50 — violeta */
+  /* legenda */
+  .medkey{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:2px 0 2px; font-size:11px; color:var(--ink2);}
+  .medkey span{display:inline-flex; align-items:center; gap:6px;}
+  .medkey i{width:9px; height:9px; border-radius:50%; display:inline-block; background:var(--line2);}
+  .medkey i.lv1{background:#E0B33A;} .medkey i.lv2{background:#5FB8E0;} .medkey i.lv3{background:#A06CD5;}
+  /* ---- portões agrupados (menu do quiz) ---- */
+  .cat-group-lbl{display:flex; align-items:baseline; gap:9px; margin:18px 2px 9px; font-family:var(--jp);
+    font-size:15px; color:var(--sys);}
+  .cat-group-lbl ruby rt{font-size:.36em; color:var(--sys);}
+  .cat-group-lbl span{font-family:var(--ui); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink2); font-weight:600;}
+  .gate.wide{flex-direction:row; justify-content:flex-start; gap:13px; width:100%; padding:14px 16px; margin-bottom:2px;}
+  .gate.wide .g-k{font-size:26px;}
+  .gate.wide .g-n{font-size:14px; text-align:left; font-weight:600;}
+  .gate.wide[aria-pressed="true"] .g-k{transform:none;}
+  .area .nm .area-k{font-family:var(--jp); color:var(--sys); margin-right:7px; font-size:13px;}
+  /* ---- layout de conjugação (verbos / adjetivos) ---- */
+  .conj{display:flex; flex-direction:column; align-items:center; text-align:center; gap:0; margin:14px 2px 6px;}
+  .conj-ask{font-size:13.5px; color:var(--ink2); letter-spacing:.04em; margin-bottom:14px;}
+  .conj-form{display:inline-block; max-width:100%; font-size:13.5px; font-weight:700; color:var(--sys);
+    border:1px solid var(--sys); border-radius:999px; padding:8px 18px; line-height:1.3;
+    background:color-mix(in srgb,var(--sys) 10%, var(--card)); box-shadow:0 5px 16px var(--sysglow);}
+  .conj-form.neg{color:var(--shu); border-color:var(--shu);
+    background:color-mix(in srgb,var(--shu) 10%, var(--card)); box-shadow:0 5px 16px color-mix(in srgb,var(--shu) 30%, transparent);}
+  .conj-word{font-family:var(--jp); font-size:48px; font-weight:600; line-height:1.15; margin:20px 0 2px; color:var(--ink); word-break:break-word;}
+  .conj-word.num{font-family:var(--display); font-variant-numeric:tabular-nums; letter-spacing:.01em;}
+  .conj-word.pt{font-family:var(--display); font-size:36px; font-weight:600;}
+  .conj-word.sent{font-size:27px; line-height:1.55; font-weight:500;}
+  .conj-word .gap{display:inline-block; min-width:1.5em; padding:0 .2em; margin:0 .1em; border-radius:7px;
+    background:color-mix(in srgb,var(--sys) 16%, transparent); color:var(--sys); border:1px dashed var(--sys);
+    font-weight:700; font-size:.85em; vertical-align:1px;}
+  .conj-word ruby rt{font-size:.32em; color:var(--sys); font-weight:700; font-family:var(--ui); letter-spacing:.01em;}
+  .conj-mean{font-size:14px; color:var(--ink2);}
+  @media (min-width:520px){ .conj-word{font-size:56px;} }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="seal">五</div>
+      <div><small>JLPT</small><b>Quiz N5</b></div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="statusBtn" title="Status" aria-label="Abrir status">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.6 20.8 7.3v9.4L12 21.4 3.2 16.7V7.3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 6.4 17.4 9.2v5.6L12 17.6 6.6 14.8V9.2z" fill="currentColor" opacity=".18"/></svg>
+      </button>
+      <button class="icon-btn" id="themeBtn" title="Tema">◐</button>
+    </div>
+  </div>
+  <div id="root"></div>
+  <div class="spacer"></div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  "use strict";
+  var root=document.getElementById("root");
+  var DATA=window.QUIZ_DATA||[], CATS=window.QUIZ_CATS||{};
+  var KEY="n5quiz_v1";
+  // kanji-glifo por categoria (estilo "portão" do Sistema)
+  var CAT_K={vocab:"語",verbo:"動",adj:"形",kanji:"漢",kata:"カ",gram:"文",contador:"個",numero:"数",tempo:"時",kana:"仮",antonimo:"対",variado:"雑",cor:"色",expr:"表",saudacao:"挨"};
+  // portões agrupados por tema (UX: hierarquia em vez de uma grade plana)
+  var CAT_GROUPS=[
+    {jp:"語彙", r:"ごい",   nm:"Vocabulário", cats:["vocab","antonimo","expr","saudacao","variado"]},
+    {jp:"文字", r:"もじ",   nm:"Escrita",      cats:["kanji","kana","kata"]},
+    {jp:"文法", r:"ぶんぽう", nm:"Gramática & formas", cats:["gram","verbo","adj"]},
+    {jp:"時数", r:"じすう",  nm:"Tempo & contagem", cats:["contador","tempo"]}
+  ];
+  // opções de quantidade (estilo "intensidade da caçada"). n=0 → Infinito (todo o pool)
+  var LEN_OPTS=[{n:10,k:"急",t:"Investida"},{n:30,k:"狩",t:"Caçada"},{n:50,k:"試",t:"Provação"},{n:0,k:"極",t:"Infinito",d:"∞"}];
+  // modo sobrevivência: 3 vidas + temporizador (cresce no acerto, encolhe no erro)
+  var SURV={lives:3, start:30, gain:4, loss:6, max:60, low:8};
+
+  // ---------- flashcards (conjuntos temáticos com furigana) ----------
+  // cada carta: w = segmentos [texto, leitura|null] (null = kana/okurigana sem furigana); pt = significado
+  var FLASH_XP=4; // EXP base por carta acertada no desafio (1ª vez)
+  var DECKS=[
+    {id:"cores", k:"色", name:"Cores", cards:[
+      {w:[["赤","あか"]],pt:"vermelho"},{w:[["青","あお"]],pt:"azul"},
+      {w:[["黄","き"],["色","いろ"]],pt:"amarelo"},{w:[["緑","みどり"]],pt:"verde"},
+      {w:[["黒","くろ"]],pt:"preto"},{w:[["白","しろ"]],pt:"branco"},
+      {w:[["茶","ちゃ"],["色","いろ"]],pt:"marrom"},{w:[["紫","むらさき"]],pt:"roxo"},
+      {w:[["灰","はい"],["色","いろ"]],pt:"cinza"},{w:[["水","みず"],["色","いろ"]],pt:"azul-claro"},
+      {w:[["金","きん"],["色","いろ"]],pt:"dourado"}
+    ]},
+    {id:"numeros", k:"数", name:"Números", cards:[
+      {w:[["一","いち"]],pt:"um (1)"},{w:[["二","に"]],pt:"dois (2)"},{w:[["三","さん"]],pt:"três (3)"},
+      {w:[["四","よん"]],pt:"quatro (4)"},{w:[["五","ご"]],pt:"cinco (5)"},{w:[["六","ろく"]],pt:"seis (6)"},
+      {w:[["七","なな"]],pt:"sete (7)"},{w:[["八","はち"]],pt:"oito (8)"},{w:[["九","きゅう"]],pt:"nove (9)"},
+      {w:[["十","じゅう"]],pt:"dez (10)"},{w:[["百","ひゃく"]],pt:"cem (100)"},{w:[["千","せん"]],pt:"mil (1000)"}
+    ]},
+    {id:"semana", k:"曜", name:"Dias da semana", cards:[
+      {w:[["月","げつ"],["曜","よう"],["日","び"]],pt:"segunda-feira"},
+      {w:[["火","か"],["曜","よう"],["日","び"]],pt:"terça-feira"},
+      {w:[["水","すい"],["曜","よう"],["日","び"]],pt:"quarta-feira"},
+      {w:[["木","もく"],["曜","よう"],["日","び"]],pt:"quinta-feira"},
+      {w:[["金","きん"],["曜","よう"],["日","び"]],pt:"sexta-feira"},
+      {w:[["土","ど"],["曜","よう"],["日","び"]],pt:"sábado"},
+      {w:[["日","にち"],["曜","よう"],["日","び"]],pt:"domingo"}
+    ]},
+    {id:"familia", k:"家", name:"Família", cards:[
+      {w:[["父","ちち"]],pt:"pai (meu)"},{w:[["母","はは"]],pt:"mãe (minha)"},
+      {w:[["兄","あに"]],pt:"irmão mais velho"},{w:[["姉","あね"]],pt:"irmã mais velha"},
+      {w:[["弟","おとうと"]],pt:"irmão mais novo"},{w:[["妹","いもうと"]],pt:"irmã mais nova"},
+      {w:[["家","か"],["族","ぞく"]],pt:"família"},{w:[["友","とも"],["達","だち"]],pt:"amigo"},
+      {w:[["祖","そ"],["父","ふ"]],pt:"avô"},{w:[["祖","そ"],["母","ぼ"]],pt:"avó"},
+      {w:[["両","りょう"],["親","しん"]],pt:"pais"},{w:[["子","こ"],["供","ども"]],pt:"criança"}
+    ]},
+    {id:"natureza", k:"自", name:"Natureza", cards:[
+      {w:[["日","ひ"]],pt:"sol / dia"},{w:[["月","つき"]],pt:"lua"},{w:[["火","ひ"]],pt:"fogo"},
+      {w:[["水","みず"]],pt:"água"},{w:[["木","き"]],pt:"árvore"},{w:[["山","やま"]],pt:"montanha"},
+      {w:[["川","かわ"]],pt:"rio"},{w:[["空","そら"]],pt:"céu"},{w:[["海","うみ"]],pt:"mar"},
+      {w:[["花","はな"]],pt:"flor"},{w:[["雨","あめ"]],pt:"chuva"},
+      {w:[["風","かぜ"]],pt:"vento"},{w:[["雪","ゆき"]],pt:"neve"},{w:[["星","ほし"]],pt:"estrela"},
+      {w:[["雲","くも"]],pt:"nuvem"}
+    ]},
+    {id:"tempo", k:"時", name:"Tempo", cards:[
+      {w:[["今日","きょう"]],pt:"hoje"},{w:[["明日","あした"]],pt:"amanhã"},{w:[["昨日","きのう"]],pt:"ontem"},
+      {w:[["毎","まい"],["日","にち"]],pt:"todo dia"},{w:[["朝","あさ"]],pt:"manhã"},{w:[["昼","ひる"]],pt:"meio-dia"},
+      {w:[["夜","よる"]],pt:"noite"},{w:[["今","いま"]],pt:"agora"},{w:[["年","とし"]],pt:"ano"},
+      {w:[["時","じ"],["間","かん"]],pt:"tempo / hora"}
+    ]},
+    {id:"contadores", k:"算", name:"Contadores", cards:[
+      {w:[["一人","ひとり"]],pt:"1 pessoa"},{w:[["二人","ふたり"]],pt:"2 pessoas"},
+      {w:[["三","さん"],["人","にん"]],pt:"3 pessoas"},
+      {w:[["一","ひと"],["つ",null]],pt:"1 (coisa)"},{w:[["二","ふた"],["つ",null]],pt:"2 (coisas)"},
+      {w:[["三","みっ"],["つ",null]],pt:"3 (coisas)"},
+      {w:[["一","いっ"],["本","ぽん"]],pt:"1 (objeto longo)"},{w:[["一","いち"],["枚","まい"]],pt:"1 (objeto plano)"},
+      {w:[["一","いっ"],["匹","ぴき"]],pt:"1 (animal pequeno)"},{w:[["一","いっ"],["回","かい"]],pt:"1 vez"}
+    ]},
+    {id:"corpo", k:"体", name:"Corpo", cards:[
+      {w:[["頭","あたま"]],pt:"cabeça"},{w:[["顔","かお"]],pt:"rosto"},{w:[["目","め"]],pt:"olho"},
+      {w:[["耳","みみ"]],pt:"orelha"},{w:[["鼻","はな"]],pt:"nariz"},{w:[["口","くち"]],pt:"boca"},
+      {w:[["歯","は"]],pt:"dente"},{w:[["手","て"]],pt:"mão"},{w:[["足","あし"]],pt:"pé / perna"},
+      {w:[["首","くび"]],pt:"pescoço"},{w:[["髪","かみ"]],pt:"cabelo"},{w:[["体","からだ"]],pt:"corpo"}
+    ]},
+    {id:"comida", k:"食", name:"Comida", cards:[
+      {w:[["ご",null],["飯","はん"]],pt:"comida / arroz"},{w:[["肉","にく"]],pt:"carne"},
+      {w:[["魚","さかな"]],pt:"peixe"},{w:[["野","や"],["菜","さい"]],pt:"legumes"},
+      {w:[["卵","たまご"]],pt:"ovo"},{w:[["果物","くだもの"]],pt:"fruta"},
+      {w:[["お",null],["茶","ちゃ"]],pt:"chá"},{w:[["牛","ぎゅう"],["乳","にゅう"]],pt:"leite"},
+      {w:[["弁","べん"],["当","とう"]],pt:"marmita"},{w:[["パン",null]],pt:"pão"}
+    ]},
+    {id:"animais", k:"獣", name:"Animais", cards:[
+      {w:[["犬","いぬ"]],pt:"cachorro"},{w:[["猫","ねこ"]],pt:"gato"},{w:[["鳥","とり"]],pt:"pássaro"},
+      {w:[["馬","うま"]],pt:"cavalo"},{w:[["牛","うし"]],pt:"vaca / boi"},{w:[["豚","ぶた"]],pt:"porco"},
+      {w:[["象","ぞう"]],pt:"elefante"},{w:[["虫","むし"]],pt:"inseto"},{w:[["魚","さかな"]],pt:"peixe"}
+    ]},
+    {id:"lugares", k:"場", name:"Lugares", cards:[
+      {w:[["学","がっ"],["校","こう"]],pt:"escola"},{w:[["駅","えき"]],pt:"estação"},
+      {w:[["病","びょう"],["院","いん"]],pt:"hospital"},{w:[["銀","ぎん"],["行","こう"]],pt:"banco"},
+      {w:[["図","と"],["書","しょ"],["館","かん"]],pt:"biblioteca"},{w:[["公","こう"],["園","えん"]],pt:"parque"},
+      {w:[["店","みせ"]],pt:"loja"},{w:[["家","いえ"]],pt:"casa"},
+      {w:[["部","へ"],["屋","や"]],pt:"quarto"},{w:[["会","かい"],["社","しゃ"]],pt:"empresa"},
+      {w:[["教","きょう"],["室","しつ"]],pt:"sala de aula"}
+    ]},
+    {id:"adjetivos", k:"形", name:"Adjetivos", cards:[
+      {w:[["大","おお"],["きい",null]],pt:"grande"},{w:[["小","ちい"],["さい",null]],pt:"pequeno"},
+      {w:[["新","あたら"],["しい",null]],pt:"novo"},{w:[["古","ふる"],["い",null]],pt:"velho"},
+      {w:[["高","たか"],["い",null]],pt:"alto / caro"},{w:[["安","やす"],["い",null]],pt:"barato"},
+      {w:[["暑","あつ"],["い",null]],pt:"quente"},{w:[["寒","さむ"],["い",null]],pt:"frio"},
+      {w:[["楽","たの"],["しい",null]],pt:"divertido"},{w:[["難","むずか"],["しい",null]],pt:"difícil"},
+      {w:[["早","はや"],["い",null]],pt:"cedo / rápido"},{w:[["忙","いそが"],["しい",null]],pt:"ocupado"}
+    ]},
+    {id:"verbos", k:"動", name:"Verbos", cards:[
+      {w:[["食","た"],["べる",null]],pt:"comer"},{w:[["飲","の"],["む",null]],pt:"beber"},
+      {w:[["見","み"],["る",null]],pt:"ver"},{w:[["行","い"],["く",null]],pt:"ir"},
+      {w:[["来","く"],["る",null]],pt:"vir"},{w:[["聞","き"],["く",null]],pt:"ouvir / perguntar"},
+      {w:[["読","よ"],["む",null]],pt:"ler"},{w:[["書","か"],["く",null]],pt:"escrever"},
+      {w:[["話","はな"],["す",null]],pt:"falar"},{w:[["買","か"],["う",null]],pt:"comprar"},
+      {w:[["寝","ね"],["る",null]],pt:"dormir"},{w:[["起","お"],["きる",null]],pt:"acordar"}
+    ]}
+  ];
+  // cada conjunto reflete num atributo/categoria do Status
+  var DECK_CAT={cores:"cor", numeros:"numero", semana:"tempo", familia:"vocab", natureza:"kanji", tempo:"tempo", contadores:"contador",
+    corpo:"vocab", comida:"vocab", animais:"vocab", lugares:"vocab", adjetivos:"adj", verbos:"verbo"};
+  function deckById(id){ for(var i=0;i<DECKS.length;i++) if(DECKS[i].id===id) return DECKS[i]; return null; }
+  // representação das cartas
+  function cardPlain(c){ return c.w.map(function(s){return s[0];}).join(""); }              // só kanji/kana
+  function cardRuby(c){ return c.w.map(function(s){ return s[1]?('<ruby>'+esc(s[0])+'<rt>'+esc(s[1])+'</rt></ruby>'):esc(s[0]); }).join(""); }
+  function cardReading(c){ return c.w.map(function(s){ return s[1]!=null?s[1]:s[0]; }).join(""); } // leitura completa em kana
+  var ALL_READINGS=(function(){ var set={}; DECKS.forEach(function(d){ d.cards.forEach(function(c){ set[cardReading(c)]=1; }); }); return Object.keys(set); })();
+
+  // ---------- estado persistente ----------
+  function load(){
+    try{var s=JSON.parse(localStorage.getItem(KEY));}catch(e){s=null;}
+    s=s||{};
+    s.stats=s.stats||{answered:0,correct:0,wrong:0,byCat:{},streak:0,best:0};
+    s.stats.byCat=s.stats.byCat||{};
+    s.wrongIds=s.wrongIds||[];
+    s.settings=s.settings||{cat:"all",len:10,theme:"light"};
+    // migra quantidades antigas (ex.: 20) p/ as novas opções: 10/30/50/0(∞)
+    if([10,30,50,0].indexOf(s.settings.len)<0) s.settings.len=10;
+    // categoria salva que não é mais do quiz (ex.: cor/numero → flashcards) volta p/ "Tudo"
+    if(s.settings.cat && s.settings.cat!=="all" && !CATS[s.settings.cat]) s.settings.cat="all";
+    if(typeof s.settings.attrsOpen!=="boolean") s.settings.attrsOpen=false;
+    if(typeof s.settings.survival!=="boolean") s.settings.survival=true;
+    s.flash = s.flash || {best:{},cards:{}};
+    s.flash.best = s.flash.best || {};
+    s.flash.cards = s.flash.cards || {}; // maestria por carta: {key:{seen,cs}}
+    // medalhas (bolinhas) por portão: {d1,d2,d3} = maior intensidade que atingiu 10%/50%/100% ; inf = 100% no infinito
+    s.medals = s.medals || {quiz:{}, flash:{}};
+    s.medals.quiz = s.medals.quiz || {};
+    // migra formato antigo (número de %) p/ o novo (objeto)
+    Object.keys(s.medals.quiz).forEach(function(c){ if(typeof s.medals.quiz[c]!=="object" || s.medals.quiz[c]===null) delete s.medals.quiz[c]; });
+    // progressão (Solo Leveling) — defaults compatíveis com saves antigos
+    s.xp = s.xp || 0;
+    s.level = s.level || 1;
+    s.rank = s.rank || "E";
+    s.perfectSessions = s.perfectSessions || 0;
+    s.titlesUnlocked = s.titlesUnlocked || [];
+    s.equippedTitle = s.equippedTitle || null;
+    s.titleManual = s.titleManual || false;
+    return s;
+  }
+  function save(){ try{localStorage.setItem(KEY,JSON.stringify(STATE));}catch(e){} }
+  var STATE=load();
+
+  // ---------- tema ----------
+  function applyTheme(){document.documentElement.setAttribute("data-theme",STATE.settings.theme);
+    document.querySelector('meta[name=theme-color]').setAttribute("content", STATE.settings.theme==="dark"?"#15120E":"#C8412B");}
+  applyTheme();
+  document.getElementById("themeBtn").onclick=function(){
+    STATE.settings.theme = STATE.settings.theme==="dark"?"light":"dark"; save(); applyTheme();};
+  document.getElementById("statusBtn").onclick=function(){ statusModal(); };
+
+  // ---------- util ----------
+  function shuffle(a){a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a;}
+  function pct(c,t){return t?Math.round(100*c/t):0;}
+  function esc(s){return String(s).replace(/[&<>]/g,function(m){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[m];});}
+  function el(html){var d=document.createElement("div"); d.innerHTML=html.trim(); return d.firstChild;}
+  // furigana nas perguntas: 「palavra」（tradução） → 「<ruby>palavra<rt>tradução</rt></ruby>」
+  function qFuri(q){ return esc(q).replace(/「([^」]*)」（([^）]*)）/g, '「<ruby>$1<rt>$2</rt></ruby>」'); }
+  // intensidade da caçada → nível/cor (infinito=0 não conta nas bolinhas)
+  var INTENS={10:1, 30:2, 50:3}; // len → nível
+  // 3 bolinhas: posição = precisão (10%/50%/100%); cor = maior intensidade que atingiu aquela precisão
+  function medalsHTML(m){ m=m||{};
+    function dot(l){ return '<i class="medal'+(l?(' lv'+l):'')+'"></i>'; }
+    return '<span class="medals">'+dot(m.d1)+dot(m.d2)+dot(m.d3)+'</span>'; }
+  // subtítulos de portão: tier 1=Investida(10), 2=Caçada(30), 3=Provação(50), 4=Infinito (100%)
+  var SUBT=[null,{n:"Aprendiz",k:"初"},{n:"Caçador",k:"狩"},{n:"Mestre",k:"達"},{n:"Lenda",k:"極"}];
+  function subTier(cat){ var m=(STATE.medals.quiz||{})[cat]; if(!m) return 0; return m.inf?4:(m.d3||0); }
+  function subName(cat,tier){ var t=SUBT[tier]; return t?(t.n+" · "+(CATS[cat]||cat)):null; }
+  // complemento do título = maior nível dominado (100%) em qualquer portão (só sobrevivência alimenta isso)
+  function titleComplement(){ var best=0, mq=STATE.medals.quiz||{}; for(var c in mq){ var t=subTier(c); if(t>best) best=t; } return best; }
+  function titleComplementStr(){ var t=titleComplement(); return t?(" · "+SUBT[t].n+" "+SUBT[t].k):""; }
+  // furigana: <ruby>漢字<rt>かんじ</rt></ruby>
+  function rb(kanji, reading){ return '<ruby>'+esc(kanji)+'<rt>'+esc(reading)+'</rt></ruby>'; }
+  // leituras dos kanji usados em menus / aba status
+  var ATTR_READ={"語彙":"ごい","漢字":"かんじ","文法":"ぶんぽう","動形":"どうけい","仮名":"かな","数時":"すうじ"};
+
+  // ---------- nível ----------
+  function levelInfo(){
+    var st=STATE.stats, a=st.answered, acc=pct(st.correct,a);
+    var label, idx;
+    if(a<15){label="N5 · aquecendo"; idx=0;}
+    else if(acc<40){label="N5 · iniciante"; idx=1;}
+    else if(acc<60){label="N5 · básico"; idx=2;}
+    else if(acc<75){label="N5 · em progresso"; idx=3;}
+    else if(acc<85){label="N5 · sólido"; idx=4;}
+    else if(acc<93||a<200){label="N5 · avançado"; idx=5;}
+    else {label="N5 · pronto p/ a prova 🌸"; idx=6;}
+    return {label:label, acc:acc, idx:idx};
+  }
+
+  // ---------- progressão (Solo Leveling) ----------
+  var BASE_CORRECT=8, BASE_WRONG=1, RETRY_FACTOR=0.40;
+  function streakMult(s){ return Math.min(1 + 0.08*s, 1.5); }
+  // curva progressiva: cada nível custa bem mais que o anterior (50·L^1.8)
+  function xpStep(L){ return Math.round(50*Math.pow(L,1.8)); }
+  function xpForLevel(L){ var t=0; for(var k=1;k<L;k++) t+=xpStep(k); return t; }
+  function levelFromXp(xp){ var L=1; while(xp>=xpForLevel(L+1)) L++; return L; }
+
+  var RANKS=[
+    {min:60, code:"国家級", label:"Nível Nacional · Soberano"},
+    {min:42, code:"S",  label:"Rank S · Caçador Supremo"},
+    {min:28, code:"A",  label:"Rank A · Caçador de Elite Superior"},
+    {min:18, code:"B",  label:"Rank B · Caçador de Elite"},
+    {min:10, code:"C",  label:"Rank C · Caçador Veterano"},
+    {min:5,  code:"D",  label:"Rank D · Caçador"},
+    {min:1,  code:"E",  label:"Rank E · Desperto"}
+  ];
+  function rankFromLevel(L){ for(var i=0;i<RANKS.length;i++){ if(L>=RANKS[i].min) return RANKS[i]; } return RANKS[RANKS.length-1]; }
+
+  function bcat(c){ var b=STATE.stats.byCat[c]; return b?b.c:0; }
+  // 6 atributos = 6 tipos de estudo (cobrem as 12 categorias). v = valor; f = fração 0..1 p/ o radar
+  function attrs(){
+    function P(){ var s=0; for(var i=0;i<arguments.length;i++) s+=bcat(arguments[i]); return s; }
+    function mk(jp,nm,p){ return {jp:jp, nm:nm, p:p, v:10+Math.floor(8*Math.sqrt(p)), f:p/(p+30)}; }
+    return [
+      mk("語彙","Vocabulário", P("vocab","antonimo","variado","cor","expr","saudacao")),
+      mk("漢字","Kanji",       P("kanji")),
+      mk("文法","Gramática",   P("gram")),
+      mk("動形","Verbos/Adj.", P("verbo","adj")),
+      mk("仮名","Kana",        P("kana","kata")),
+      mk("数時","Núm./Tempo",  P("numero","contador","tempo"))
+    ];
+  }
+  // hexágono radar (SVG, sem libs): cada atributo é uma ponta; a área preenchida cresce
+  function radarSVG(A){
+    var cx=160, cy=150, R=88, LR=R+15;
+    function pt(i,r){ var a=(-90+60*i)*Math.PI/180; return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; }
+    function poly(r){ var o=[]; for(var i=0;i<6;i++){var p=pt(i,r); o.push(p[0].toFixed(1)+","+p[1].toFixed(1));} return o.join(" "); }
+    var s='<svg viewBox="0 0 320 290" class="radar" xmlns="http://www.w3.org/2000/svg">';
+    [0.25,0.5,0.75,1].forEach(function(g){ s+='<polygon class="ring" points="'+poly(R*g)+'"/>'; });
+    for(var i=0;i<6;i++){ var e=pt(i,R); s+='<line class="spoke" x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'"/>'; }
+    var dp=[]; for(var i=0;i<6;i++){ var p=pt(i,R*Math.max(0.05,A[i].f)); dp.push(p[0].toFixed(1)+","+p[1].toFixed(1)); }
+    s+='<polygon class="rdata" points="'+dp.join(" ")+'"/>';
+    for(var i=0;i<6;i++){ var p=pt(i,R*Math.max(0.05,A[i].f)); s+='<circle class="rdot" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.2"/>'; }
+    for(var i=0;i<6;i++){
+      var lp=pt(i,LR), c=Math.cos((-90+60*i)*Math.PI/180);
+      var anchor=Math.abs(c)<0.3?"middle":(c>0?"start":"end");
+      var dy=(i===0)?-2:(i===3?12:0);
+      s+='<text class="rkanji" x="'+lp[0].toFixed(1)+'" y="'+(lp[1]+dy).toFixed(1)+'" text-anchor="'+anchor+'">'+A[i].jp+'</text>';
+      s+='<text class="rval" x="'+lp[0].toFixed(1)+'" y="'+(lp[1]+dy+13).toFixed(1)+'" text-anchor="'+anchor+'">'+A[i].v+'</text>';
+    }
+    return s+'</svg>';
+  }
+
+  // menu para trocar o título equipado (estilo Sistema)
+  function titleGlyph(t){ var m=(t.text.match(/[一-鿿]/g)||[]); return m.length?m[m.length-1]:"称"; }
+  function titleMenu(){
+    var unlocked=STATE.titlesUnlocked.length, totalT=TITLES.length;
+    var rows=TITLES.map(function(t){
+      var on=STATE.titlesUnlocked.indexOf(t.id)>=0, eqc=(STATE.equippedTitle===t.id);
+      var flag = eqc ? '<span class="tflag on">equipado</span>'
+                     : (on ? '<span class="tflag">equipar</span>' : '');
+      return '<button class="tcard'+(on?'':' locked')+(eqc?' equipped':'')+'" data-t="'+t.id+'"'+(on?'':' disabled')+'>'
+        +'<span class="tseal">'+(on?esc(titleGlyph(t)):'&#128274;')+'</span>'
+        +'<span class="tinfo"><span class="tt">'+(on?esc(t.text):'？？？')+'</span>'
+        +'<span class="td">'+(on?esc(t.desc):'Bloqueado — continue caçando.')+'</span></span>'
+        +flag+'</button>';
+    }).join('');
+    var ov=el('<div class="sysmodal"><div class="card system sheet reveal">'
+      +'<button class="x" id="tmX" aria-label="Fechar">×</button>'
+      +'<div class="kicker">⟦ TÍTULOS ⟧ '+rb("称号","しょうごう")+'</div>'
+      +'<div class="level-sub" style="margin:6px 0 14px">'+unlocked+' / '+totalT+' desbloqueados · toque para equipar</div>'
+      +'<div class="titlegrid">'+rows+'</div></div></div>');
+    document.body.appendChild(ov);
+    function close(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }
+    ov.querySelector("#tmX").onclick=close;
+    ov.onclick=function(e){ if(e.target===ov) close(); };
+    ov.querySelectorAll(".tcard:not(.locked)").forEach(function(b){
+      b.onclick=function(){ STATE.equippedTitle=b.dataset.t; STATE.titleManual=true; save(); close(); home(); };
+    });
+  }
+
+
+  var TITLES=[
+    {id:"despertar", text:"O Despertar",             cond:function(L,s){return L>=1;},                          desc:"Você entrou no Sistema."},
+    {id:"primeiro",  text:"Primeiro Sangue 初血",     cond:function(L,s){return s.correct>=1;},                  desc:"Seu primeiro acerto."},
+    {id:"tinta",     text:"Aprendiz da Tinta 墨",     cond:function(L,s){return L>=3;},                          desc:"A jornada do sumi começa."},
+    {id:"firme",     text:"Mão Firme",                cond:function(L,s){return s.best>=5;},                     desc:"5 acertos sem falhar."},
+    {id:"kana",      text:"Leitor de Kana 仮名",       cond:function(L,s){return bcat("kana")+bcat("kata")>=30;}, desc:"O silabário não tem segredos."},
+    {id:"limpa",     text:"Caçada Limpa 清狩",         cond:function(L,s){return (STATE.perfectSessions||0)>=1;}, desc:"Uma sessão sem erros."},
+    {id:"sombra",    text:"Forjado em Sombra",        cond:function(L,s){return L>=5;},                          desc:"Rank D alcançado."},
+    {id:"kanji",     text:"Colecionador de Kanji 漢",  cond:function(L,s){return bcat("kanji")>=50;},             desc:"50 kanji dominados."},
+    {id:"ferro",     text:"Disciplina de Ferro 鉄",    cond:function(L,s){return s.best>=15;},                    desc:"15 acertos em sequência."},
+    {id:"olho",      text:"Olho que Tudo Vê 視",       cond:function(L,s){return s.answered>=300 && pct(s.correct,s.answered)>=80;}, desc:"Volume e precisão juntos."},
+    {id:"veterano",  text:"Veterano 老兵",             cond:function(L,s){return L>=10;},                         desc:"Rank C: experiência forjada."},
+    {id:"particula", text:"Mestre das Partículas 助詞", cond:function(L,s){return bcat("gram")>=80;},             desc:"は・が・を sob controle."},
+    {id:"semfalhas", text:"Sem Falhas 無欠",           cond:function(L,s){return (STATE.perfectSessions||0)>=10;},desc:"Dez caçadas impecáveis."},
+    {id:"elite",     text:"Caçador de Elite 精鋭",     cond:function(L,s){return L>=18;},                         desc:"Rank B conquistado."},
+    {id:"erudito",   text:"Erudito N5 学者",           cond:function(L,s){return s.correct>=1000;},               desc:"Mil acertos acumulados."},
+    {id:"monarca",   text:"Monarca em Ascensão 君臨",   cond:function(L,s){return L>=28;},                         desc:"Rank A: poucos chegam aqui."},
+    {id:"soberano",  text:"Soberano do Sistema 主",    cond:function(L,s){return L>=42;},                         desc:"Rank S. O Sistema te reconhece."},
+    {id:"nacional",  text:"Nível Nacional 国家級",      cond:function(L,s){return L>=60;},                         desc:"Lendário. Pronto para a prova. 🌸"}
+  ];
+  function titleById(id){ for(var i=0;i<TITLES.length;i++) if(TITLES[i].id===id) return TITLES[i]; return null; }
+
+  // sincroniza nível/rank/títulos derivados de STATE.xp; com snapshot, devolve eventos novos
+  // allowUnlock=false → só recalcula nível/rank, NÃO libera títulos novos (ex.: modo estudo livre / home)
+  function syncProgress(snapshot, allowUnlock){
+    var L=levelFromXp(STATE.xp), rk=rankFromLevel(L);
+    STATE.level=L; STATE.rank=rk.code;
+    var newTitles=[];
+    if(allowUnlock!==false){
+      TITLES.forEach(function(t){
+        if(t.cond(L,STATE.stats) && STATE.titlesUnlocked.indexOf(t.id)<0){ STATE.titlesUnlocked.push(t.id); newTitles.push(t.id); }
+      });
+      if(STATE.titlesUnlocked.length && (!STATE.titleManual || !STATE.equippedTitle)){
+        STATE.equippedTitle = STATE.titlesUnlocked[STATE.titlesUnlocked.length-1];
+      }
+    }
+    if(!snapshot) return null;
+    var events={levels:[], rankUp:null, titles:newTitles};
+    for(var l=snapshot.level+1; l<=L; l++) events.levels.push(l);
+    if(rk.code!==snapshot.rank) events.rankUp={from:snapshot.rank, to:rk.code, label:rk.label};
+    return events;
+  }
+
+  // ---------- notificações do Sistema ----------
+  var notifQ=[];
+  function notify(html){ notifQ.push(html); }
+  function flushNotif(done){
+    if(!notifQ.length){ if(done) done(); return; }
+    var msg=notifQ.shift();
+    var ov=el('<div class="sysmodal"><div class="card system sysnote reveal"><div class="kicker">⟦ NOTIFICAÇÃO ⟧</div><div class="note-body">'+msg+'</div><button class="btn primary mini" id="noteOk">Confirmar</button></div></div>');
+    document.body.appendChild(ov);
+    ov.querySelector("#noteOk").onclick=function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); flushNotif(done); };
+  }
+
+  // ---------- modal de status (atributos) ----------
+  function statusModal(){
+    var A=attrs();
+    var html='<div class="card system sheet reveal">'
+      +'<button class="x" id="stX" aria-label="Fechar">×</button>'
+      +'<div class="kicker">⟦ STATUS ⟧ ステータス</div>'
+      +'<div style="height:8px"></div>';
+    html+=radarSVG(A);
+    html+='<div class="alegend">';
+    A.forEach(function(a){
+      html+='<div class="arow"><span class="ak">'+(ATTR_READ[a.jp]?rb(a.jp,ATTR_READ[a.jp]):esc(a.jp))+'</span><span class="an">'+esc(a.nm)+'</span>'
+        +'<span class="abar"><i data-w="'+Math.round(a.f*100)+'"></i></span>'
+        +'<span class="av">'+a.v+'</span></div>';
+    });
+    html+='</div>';
+    html+='<button class="btn ghost mini" id="stAreas" style="margin-top:16px">Ver áreas '+rb("領域","りょういき")+'</button>';
+    html+='<div class="sec" style="margin:16px 2px 2px"><div class="ln"></div></div>';
+    html+='<button class="txt-btn" id="stReset">Reiniciar progresso</button>';
+    html+='</div>';
+    var ov=el('<div class="sysmodal"></div>'); ov.appendChild(el(html));
+    document.body.appendChild(ov);
+    function close(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }
+    ov.querySelector("#stX").onclick=close;
+    ov.querySelector("#stAreas").onclick=function(){ areasModal(); };
+    ov.querySelector("#stReset").onclick=function(){ close(); doReset(); };
+    ov.onclick=function(e){ if(e.target===ov) close(); };
+    requestAnimationFrame(function(){
+      ov.querySelectorAll(".arow .abar > i").forEach(function(i){ i.style.width=(i.getAttribute("data-w")||0)+"%"; });
+    });
+  }
+
+  // ---------- menu de Áreas (precisão por portão) ----------
+  function areasModal(){
+    var st=STATE.stats, cats=Object.keys(CATS);
+    var areas=cats.map(function(c){var b=st.byCat[c]||{a:0,c:0}; return {c:c,a:b.a,acc:pct(b.c,b.a)};})
+                  .filter(function(x){return x.a>0;})
+                  .sort(function(x,y){return x.acc-y.acc;});
+    var html='<div class="card system sheet reveal">'
+      +'<button class="x" id="arX" aria-label="Fechar">×</button>'
+      +'<div class="kicker">⟦ ÁREAS ⟧ '+rb("領域","りょういき")+'</div>'
+      +'<div class="level-sub" style="margin:6px 0 14px">Precisão por portão — pontos fracos primeiro.</div>';
+    if(areas.length){
+      areas.forEach(function(x){
+        html+='<div class="area"><div class="nm"><span class="area-k">'+esc(CAT_K[x.c]||"・")+'</span>'+esc(CATS[x.c])+'</div>'
+          +'<div class="ab"><i data-w="'+x.acc+'"></i></div>'
+          +'<div class="pc">'+x.acc+'%</div></div>';
+      });
+    } else {
+      html+='<p style="font-size:13px;color:var(--ink2);margin:0;text-align:center;padding:24px 8px">Responda alguns quizzes ou faça desafios para revelar suas áreas.</p>';
+    }
+    html+='</div>';
+    var ov=el('<div class="sysmodal"></div>'); ov.appendChild(el(html));
+    document.body.appendChild(ov);
+    function close(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }
+    ov.querySelector("#arX").onclick=close;
+    ov.onclick=function(e){ if(e.target===ov) close(); };
+    requestAnimationFrame(function(){
+      ov.querySelectorAll(".area .ab > i").forEach(function(i){ i.style.width=(i.getAttribute("data-w")||0)+"%"; });
+    });
+  }
+
+  // ---------- HOME ----------
+  function home(){
+    stopTimer();
+    var st=STATE.stats, lv=levelInfo();
+    syncProgress(null,false); save();
+    var lvl=STATE.level, rk=rankFromLevel(lvl);
+    var curXp=STATE.xp-xpForLevel(lvl), span=xpStep(lvl);
+    var xpPct=Math.max(0,Math.min(100,Math.round(100*curXp/span)));
+    var eq=STATE.equippedTitle?titleById(STATE.equippedTitle):null;
+    var cats=Object.keys(CATS);
+    var html='<div class="view stack">';
+
+    // hero — janela de status do Sistema
+    html+='<div class="card system reveal" style="animation-delay:.02s">'
+      +'<div class="kicker">⟦ STATUS ⟧ ステータス</div>'
+      +'<div class="sys-top">'
+        +'<div class="rankbadge">'+esc(rk.code)+'</div>'
+        +'<div class="sys-id">'
+          +'<div class="level-title">Nível '+lvl+'</div>'
+          +'<div class="level-sub">'+esc(rk.label)+'</div>'
+          +(eq?'<div class="title-line" id="heroTitle">「'+esc(eq.text+titleComplementStr())+'」</div>':'')
+        +'</div>'
+      +'</div>'
+      +'<div class="bar"><i id="xpfill"></i></div>'
+      +'<div class="pct-row"><span>EXP · preparo: '+esc(lv.label)+'</span><b>'+curXp+' / '+span+'</b></div>'
+      +'</div>';
+
+    // stats (botões)
+    html+='<div class="stats reveal" style="animation-delay:.08s">'
+      +stat(st.answered,"respondidas","")
+      +stat(st.correct,"acertos","ok")
+      +stat(st.wrong,"erros","no","erros")
+      +stat(lv.acc+"%","precisão","")
+      +stat(st.best,"recorde","","recorde")
+      +'</div>';
+
+    // entrada do quiz (abre a tela de opções — mesmo fluxo dos flashcards)
+    html+='<div class="sec"><h3>Quiz 五</h3><div class="ln"></div></div>';
+    html+='<div class="card reveal" style="animation-delay:.16s">'
+      +'<div class="lbl">Caçada por portões '+rb("門","もん")+'</div>'
+      +'<p style="font-size:13px;color:var(--ink2);margin:0 0 14px">Escolha um portão, a intensidade e o modo — depois inicie a caçada.</p>'
+      +'<button class="btn primary" id="quizBtn">Abrir quiz</button>'
+      +'</div>';
+
+    // seção Flashcards
+    html+='<div class="sec"><h3>Flashcards '+rb("暗記","あんき")+'</h3><div class="ln"></div></div>';
+    html+='<div class="card reveal" style="animation-delay:.22s">'
+      +'<div class="lbl">Memorização por conjuntos</div>'
+      +'<p style="font-size:13px;color:var(--ink2);margin:0 0 14px">Estude kanji com furigana (<ruby>例<rt>れい</rt></ruby>) em conjuntos — cores, números, contadores… — e prove sua memória num desafio com pontos e EXP.</p>'
+      +'<button class="btn primary" id="flashBtn">Abrir flashcards</button>'
+      +'</div>';
+
+    html+='</div>'; // fecha .view stack
+
+    root.innerHTML=html;
+
+    // animações de barras
+    requestAnimationFrame(function(){
+      var f=document.getElementById("xpfill"); if(f) f.style.width=xpPct+"%";
+    });
+
+    // abrir menu para trocar o título (toque no título dentro do status)
+    var hT=document.getElementById("heroTitle"); if(hT) hT.onclick=titleMenu;
+    document.querySelectorAll(".stats .stat[data-act]").forEach(function(b){
+      b.onclick=function(){ var a=b.dataset.act; if(a==="erros") openErrors(); else if(a==="recorde") recordsMenu(); };
+    });
+    document.getElementById("quizBtn").onclick=quizHome;
+    var fb=document.getElementById("flashBtn"); if(fb) fb.onclick=flashHome;
+  }
+
+  // ---------- tela de opções do quiz (mesmo fluxo dos flashcards) ----------
+  function quizHome(){
+    stopTimer();
+    var cats=Object.keys(CATS);
+    var surv=STATE.settings.survival!==false;
+    var html='<div class="view stack">'
+      +'<div class="qhead"><button class="icon-btn" id="qbk" title="Voltar">‹</button>'
+        +'<div style="font-family:var(--display);font-weight:600;font-size:17px">Novo quiz 五</div>'
+        +'<div style="width:40px"></div></div>'
+      +'<div class="card reveal">';
+    html+='<div class="lbl">Selecione o portão '+rb("門","もん")+'</div><div id="catChips">';
+    // "Tudo" em destaque (largura total)
+    html+='<button class="gate wide" data-v="all" aria-pressed="'+(STATE.settings.cat==="all"?"true":"false")+'">'
+      +'<span class="g-k">全</span><span class="g-n">Tudo · todos os portões</span><span class="g-chk">✓</span></button>';
+    // grupos temáticos
+    CAT_GROUPS.forEach(function(g){
+      html+='<div class="cat-group-lbl">'+rb(g.jp,g.r)+'<span>'+esc(g.nm)+'</span></div><div class="gate-grid">';
+      g.cats.forEach(function(c){ if(CATS[c]) html+=gate(c, CAT_K[c]||"・", CATS[c], STATE.settings.cat===c, STATE.medals.quiz[c]||{}); });
+      html+='</div>';
+    });
+    html+='</div>';
+    html+='<div class="medkey"><span><i class="lv1"></i>Investida 10</span><span><i class="lv2"></i>Caçada 30</span><span><i class="lv3"></i>Provação 50</span></div>';
+    html+='<div class="medkey" style="font-size:10px;opacity:.85">bolinhas: 1ª ≥10% · 2ª ≥50% · 3ª 100% (cor = intensidade)</div>';
+    html+='<div class="lbl" style="margin-top:18px">Intensidade da caçada</div><div class="seg" id="lenChips">';
+    LEN_OPTS.forEach(function(o){ html+=qopt(o, STATE.settings.len===o.n); });
+    html+='</div>';
+    html+='<div class="lbl" style="margin-top:18px">Modo de caçada</div><div class="seg" id="modeChips" style="grid-template-columns:1fr 1fr">';
+    html+=modeOpt("surv","生","Sobrevivência","3 ♥ + tempo",surv);
+    html+=modeOpt("study","学","Estudo livre","sem pressão",!surv);
+    html+='</div>';
+    html+='<div style="margin-top:18px"><button class="btn primary" id="startBtn">Iniciar quiz</button></div>';
+    html+='</div></div>';
+    root.innerHTML=html;
+    document.getElementById("qbk").onclick=home;
+    document.querySelectorAll("#catChips .gate").forEach(function(b){
+      b.onclick=function(){ STATE.settings.cat=b.dataset.v; save();
+        document.querySelectorAll("#catChips .gate").forEach(function(x){x.setAttribute("aria-pressed", x===b);}); };
+    });
+    document.querySelectorAll("#lenChips .seg-opt").forEach(function(b){
+      b.onclick=function(){ STATE.settings.len=parseInt(b.dataset.v.replace("len",""),10); save();
+        document.querySelectorAll("#lenChips .seg-opt").forEach(function(x){x.setAttribute("aria-pressed", x===b);}); };
+    });
+    document.querySelectorAll("#modeChips .seg-opt").forEach(function(b){
+      b.onclick=function(){ STATE.settings.survival=(b.dataset.v==="surv"); save();
+        document.querySelectorAll("#modeChips .seg-opt").forEach(function(x){x.setAttribute("aria-pressed", x===b);}); };
+    });
+    document.getElementById("startBtn").onclick=startQuiz;
+  }
+  function doReset(){
+    if(confirm("Apagar todo o progresso (nível, EXP, títulos, medalhas, acertos e erros)?")){
+      STATE.stats={answered:0,correct:0,wrong:0,byCat:{},streak:0,best:0}; STATE.wrongIds=[];
+      STATE.xp=0; STATE.level=1; STATE.rank="E"; STATE.perfectSessions=0;
+      STATE.titlesUnlocked=[]; STATE.equippedTitle=null; STATE.titleManual=false;
+      STATE.flash={best:{},cards:{}};
+      STATE.medals={quiz:{},flash:{}};
+      save(); home();
+    }
+  }
+  function stat(n,l,cls,act){return '<button type="button" class="stat'+(cls?' '+cls:'')+(act?' act':'')+'"'+(act?' data-act="'+act+'"':' tabindex="-1"')+'><div class="n">'+n+'</div><div class="l">'+l+'</div></button>';}
+  function chip(v,label,on){return '<button class="chip" data-v="'+v+'" aria-pressed="'+(on?"true":"false")+'">'+esc(label)+'</button>';}
+  function gate(v,k,label,on,med){return '<button class="gate" data-v="'+v+'" aria-pressed="'+(on?"true":"false")+'">'
+    +'<span class="g-k">'+esc(k)+'</span><span class="g-n">'+esc(label)+'</span>'
+    +(med?medalsHTML(med):'')
+    +'<span class="g-chk">✓</span></button>';}
+  function qopt(o,on){return '<button class="seg-opt" data-v="len'+o.n+'" aria-pressed="'+(on?"true":"false")+'">'
+    +'<span class="q-k">'+esc(o.k)+'</span><span class="q-n">'+esc(o.d||o.n)+'</span><span class="q-t">'+esc(o.t)+'</span></button>';}
+  function modeOpt(v,k,name,sub,on){return '<button class="seg-opt mode" data-v="'+v+'" aria-pressed="'+(on?"true":"false")+'">'
+    +'<span class="q-k">'+esc(k)+'</span><span class="q-n">'+esc(name)+'</span><span class="q-t">'+esc(sub)+'</span></button>';}
+
+  // ---------- QUIZ ----------
+  var session=null, timerHandle=null;
+  function quizScoreHTML(){ return '<span class="c">✓ '+session.correct+'</span><span class="w">✕ '+session.wrong+'</span>'
+    +(session.survival?'<span class="xp">EXP '+session.xpGained+'</span>':'<span class="xp" style="color:var(--ink2)">estudo</span>'); }
+  function startQuiz(){
+    var cat=STATE.settings.cat, len=STATE.settings.len;
+    var pool=DATA.filter(function(q){return cat==="all"||q.c===cat;});
+    pool=shuffle(pool);
+    if(len>0) pool=pool.slice(0, Math.min(len,pool.length)); // len===0 → Infinito (todo o pool)
+    var L0=levelFromXp(STATE.xp);
+    session={items:pool, idx:0, correct:0, wrong:0, missed:[], catStats:{}, len:len,
+      retrySet:new Set(STATE.wrongIds), xpGained:0,
+      snap:{level:L0, rank:rankFromLevel(L0).code},
+      survival:STATE.settings.survival!==false, lives:SURV.lives, timeLeft:SURV.start, endedBy:null};
+    renderQ();
+  }
+
+  // ---------- temporizador genérico (quiz e desafio dos flashcards) ----------
+  var timed=null; // sessão cronometrada ativa: precisa ter {timeLeft, _answered, _onZero}
+  function stopTimer(){ if(timerHandle){ clearInterval(timerHandle); timerHandle=null; } }
+  function startTimer(obj, onZero){
+    stopTimer(); timed=obj; timed._onZero=onZero; updateTimer();
+    timerHandle=setInterval(function(){
+      if(!timed || timed._answered) return;
+      timed.timeLeft-=0.1;
+      if(timed.timeLeft<=0){ timed.timeLeft=0; updateTimer(); stopTimer(); var cb=timed._onZero; cb&&cb(); return; }
+      updateTimer();
+    },100);
+  }
+  function timerBarHTML(){ return '<div class="timer" id="timer"><div class="tbar"><i id="tfill"></i></div><div class="tnum" id="tnum"></div></div>'; }
+  function updateTimer(){
+    if(!timed) return;
+    var fill=document.getElementById("tfill"), num=document.getElementById("tnum"), tm=document.getElementById("timer");
+    if(!fill) return;
+    fill.style.width=Math.max(0,Math.min(100,100*timed.timeLeft/SURV.max))+"%";
+    if(num) num.textContent=Math.ceil(timed.timeLeft)+"s";
+    if(tm){ if(timed.timeLeft<=SURV.low) tm.classList.add("low"); else tm.classList.remove("low"); }
+  }
+  function heartsHTML(){
+    var h='<div class="lives" id="lives">';
+    for(var i=0;i<SURV.lives;i++){ h+='<span class="heart '+(i<session.lives?'full':'lost')+'">&#9829;</span>'; }
+    return h+'</div>';
+  }
+  function timePop(delta){
+    var pop=el('<div class="timepop '+(delta>=0?'plus':'minus')+'">'+(delta>=0?'+':'')+delta+'s</div>');
+    document.getElementById("app").appendChild(pop);
+    setTimeout(function(){ if(pop.parentNode) pop.parentNode.removeChild(pop); },900);
+  }
+  function timeOut(){
+    if(session.endedBy) return;
+    session.endedBy="time";
+    var ov=el('<div class="sysmodal"><div class="card system sysnote danger reveal">'
+      +'<div class="kicker">⟦ TEMPO ESGOTADO ⟧ 時間切れ</div>'
+      +'<div class="note-body">O tempo acabou.<br>A caçada termina aqui.</div>'
+      +'<button class="btn primary mini" id="toOk">Ver resultado</button></div></div>');
+    document.body.appendChild(ov);
+    ov.querySelector("#toOk").onclick=function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); result(); };
+  }
+  function renderQ(){
+    stopTimer();
+    var it=session.items[session.idx];
+    // embaralha exibição das opções
+    var order=shuffle([0,1,2,3]);
+    var correctDisp=order.indexOf(it.a);
+    session._order=order; session._correctDisp=correctDisp; session._answered=false;
+    var total=session.items.length, n=session.idx+1;
+    var marks=["①","②","③","④"];
+    var qcls=it.q.length>34?"q small":"q";
+    var totalLbl=session.survival&&!STATE.settings.len?'∞':total;
+    var html='<div class="view">'
+      +'<div class="qhead">'
+        +'<button class="icon-btn" id="backBtn" title="Sair">‹</button>'
+        +'<div class="score">'+quizScoreHTML()+'</div>'
+        +'<div style="font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums">'+n+' / '+totalLbl+'</div>'
+      +'</div>'
+      +'<div class="qbar"><i style="width:'+(total?pct(session.idx,total):0)+'%"></i></div>';
+    if(session.survival){
+      html+='<div class="hud">'+heartsHTML()+timerBarHTML()+'</div>';
+    }
+    html+='<div style="padding:0 2px"><span class="tag">'+esc(CATS[it.c]||it.c)+'</span></div>';
+    if(it.w && (it.f || it.c==="gram")){
+      // layout estruturado: pergunta → (chip) → palavra/valor/frase em destaque
+      var negForm=/negativ/i.test(it.f||""); // forma negativa → vermelho; positiva → azul
+      var ask, big, wcls="";
+      if(it.c==="numero"){ ask="Como se lê este valor?"; big=esc(it.w); wcls=" num"; }
+      else if(it.c==="vocab"){
+        if(it.r){ ask="O que significa?"; big='<ruby>'+esc(it.w)+'<rt>'+esc(it.r)+'</rt></ruby>'; }
+        else { ask="Qual é a leitura?"; big=esc(it.w); wcls=" pt"; }
+      }
+      else if(it.c==="gram"){ ask="Qual partícula completa a frase?"; big=esc(it.w).replace(/〔　〕/g,'<span class="gap">？</span>'); wcls=" sent"; }
+      else { ask="Qual é a forma certa?"; big='「'+esc(it.w)+'」'; }
+      html+='<div class="conj">'
+        +'<div class="conj-ask">'+ask+'</div>'
+        +(it.c==="gram"?'':'<div class="conj-form'+(negForm?' neg':'')+'">'+esc(it.f)+'</div>')
+        +'<div class="conj-word'+wcls+'">'+big+'</div>'
+        +(it.m?'<div class="conj-mean">'+esc(it.m)+'</div>':'')
+        +'</div>';
+    } else {
+      html+='<div class="'+qcls+'">'+qFuri(it.q)+'</div>';
+    }
+    html+='<div class="opts" id="opts">';
+    order.forEach(function(origIdx,disp){
+      html+='<button class="opt" data-disp="'+disp+'" style="animation-delay:'+(disp*0.05).toFixed(2)+'s"><span class="mk">'+marks[disp]+'</span><span>'+esc(it.o[origIdx])+'</span></button>';
+    });
+    html+='</div><div class="qfoot" id="qfoot"></div></div>';
+    root.innerHTML=html;
+    document.getElementById("backBtn").onclick=function(){ if(confirm("Sair do quiz? O progresso desta rodada será perdido.")){ stopTimer(); home(); } };
+    document.querySelectorAll("#opts .opt").forEach(function(b){ b.onclick=function(){ answer(parseInt(b.dataset.disp,10)); }; });
+    if(session.survival){ startTimer(session, timeOut); }
+  }
+  function answer(disp){
+    if(session._answered) return; session._answered=true;
+    stopTimer();
+    var it=session.items[session.idx], order=session._order, correctDisp=session._correctDisp;
+    var ok = disp===correctDisp;
+    // XP: usa o streak ANTES deste incremento; retry vale menos. Estudo livre = sem XP.
+    var preStreak=STATE.stats.streak;
+    var isRetry=session.retrySet && session.retrySet.has(it.i);
+    var gained = !session.survival ? 0 : (ok ? Math.round(BASE_CORRECT*streakMult(preStreak)*(isRetry?RETRY_FACTOR:1)) : BASE_WRONG);
+    var btns=document.querySelectorAll("#opts .opt");
+    btns.forEach(function(b,i){
+      b.setAttribute("disabled","");
+      var d=parseInt(b.dataset.disp,10);
+      if(d===correctDisp) b.classList.add("correct");
+      else if(d===disp) b.classList.add("wrong");
+      else b.classList.add("dim");
+    });
+    // estatísticas
+    var st=STATE.stats; st.answered++; var bc=st.byCat[it.c]||{a:0,c:0}; bc.a++;
+    if(ok){ session.correct++; st.correct++; bc.c++; st.streak++; if(st.streak>st.best)st.best=st.streak;
+      // acertou: remove dos erros salvos
+      var p=STATE.wrongIds.indexOf(it.i); if(p>-1) STATE.wrongIds.splice(p,1);
+    } else { session.wrong++; st.wrong++; st.streak=0;
+      session.missed.push({i:it.i,q:it.q,your:it.o[order[disp]],right:it.o[it.a]});
+      if(STATE.wrongIds.indexOf(it.i)<0){ STATE.wrongIds.push(it.i); if(STATE.wrongIds.length>400) STATE.wrongIds.shift(); }
+    }
+    st.byCat[it.c]=bc;
+    // precisão por categoria nesta sessão (p/ medalhas)
+    var cstat=session.catStats[it.c]||{a:0,c:0}; cstat.a++; if(ok)cstat.c++; session.catStats[it.c]=cstat;
+    // XP ganho (0 no estudo livre)
+    STATE.xp+=gained; session.xpGained+=gained;
+    save();
+    // popup flutuante de XP (só quando há ganho)
+    if(gained>0){
+      var pop=el('<div class="xppop">+'+gained+' EXP'+(isRetry?' ◇':'')+'</div>');
+      document.getElementById("app").appendChild(pop);
+      setTimeout(function(){ if(pop.parentNode) pop.parentNode.removeChild(pop); },900);
+    }
+    // ---- modo sobrevivência: temporizador + vidas ----
+    var dead=false;
+    if(session.survival){
+      var delta = ok ? SURV.gain : -SURV.loss;
+      session.timeLeft = Math.max(0, Math.min(SURV.max, session.timeLeft + delta));
+      updateTimer(); timePop(delta);
+      if(!ok){
+        session.lives--;
+        var hs=document.querySelectorAll("#lives .heart.full");
+        if(hs.length){ var lastH=hs[hs.length-1];
+          lastH.classList.remove("full"); lastH.classList.add("breaking");
+          setTimeout(function(){ lastH.classList.remove("breaking"); lastH.classList.add("lost"); },480); }
+      }
+      dead = session.lives<=0 || session.timeLeft<=0;
+    }
+    // atualiza placar topo
+    var sc=document.querySelector(".score"); if(sc) sc.innerHTML=quizScoreHTML();
+    // botão próxima / fim
+    var last=session.idx>=session.items.length-1;
+    var foot=document.getElementById("qfoot");
+    var label = dead ? 'Fim — ver resultado' : (last?'Ver resultado':'Próxima ›');
+    foot.innerHTML='<button class="btn '+((ok&&!dead)?'ghost':'primary')+'" id="nextBtn">'+label+'</button>';
+    document.getElementById("nextBtn").classList.add("reveal");
+    document.getElementById("nextBtn").onclick=function(){
+      if(dead){ session.endedBy = session.lives<=0?"lives":"time"; result(); }
+      else if(last){ result(); }
+      else { session.idx++; renderQ(); }
+    };
+  }
+
+  // ---------- RESULTADO ----------
+  function result(){
+    stopTimer();
+    var c=session.correct, t=session.correct+session.wrong, p=pct(c,t);
+    var msg = p>=90?"Excelente domínio! 🌸" : p>=75?"Muito bom — quase lá." : p>=50?"Bom progresso, siga treinando." : "Continue praticando, melhora rápido.";
+    var goLine = session.endedBy==="lives" ? "⟦ VOCÊ CAIU ⟧ 倒れた · sem vidas restantes"
+               : session.endedBy==="time" ? "⟦ TEMPO ESGOTADO ⟧ 時間切れ" : "";
+    // bolinhas + complemento de título (SÓ no modo Sobrevivência; estudo livre não conta)
+    var Lv = INTENS[session.len]||0; // nível da intensidade (0 = infinito)
+    var compBefore = titleComplement();
+    if(session.survival) Object.keys(session.catStats).forEach(function(cc){
+      var cs=session.catStats[cc], pp=pct(cs.c,cs.a);
+      var m=STATE.medals.quiz[cc] || {d1:0,d2:0,d3:0,inf:false};
+      if(session.len>0){ // infinito não muda as bolinhas
+        if(pp>=10 && Lv>m.d1) m.d1=Lv;
+        if(pp>=50 && Lv>m.d2) m.d2=Lv;
+        if(pp>=100 && Lv>m.d3) m.d3=Lv;
+      } else if(pp>=100){ m.inf=true; } // 100% no infinito → complemento lendário (極)
+      STATE.medals.quiz[cc]=m;
+    });
+    var compUp = (titleComplement()>compBefore) ? titleComplement() : 0;
+    // bônus de fim de sessão (escala com o tamanho; ignora rodadas minúsculas). Estudo livre = sem XP/títulos.
+    var served=t, tierName="", bonusBase=0;
+    if(session.survival && served>=5){
+      if(p>=100){ tierName="Despertar Perfeito 完全覚醒"; bonusBase=50; }
+      else if(p>=90){ tierName="Caçada Limpa 清狩"; bonusBase=25; }
+      else if(p>=70){ tierName="Avanço Firme 前進"; bonusBase=12; }
+      else { tierName="Treino de Sombra 影錬"; bonusBase=5; }
+    }
+    var bonus=session.survival?Math.round(bonusBase*served/10):0;
+    if(session.survival && p>=100 && served>=5) STATE.perfectSessions=(STATE.perfectSessions||0)+1;
+    STATE.xp+=bonus;
+    var totalGain=session.xpGained+bonus;
+    var events=syncProgress(session.snap, session.survival); save();
+    var lvl=STATE.level, rk=rankFromLevel(lvl);
+    var curXp=STATE.xp-xpForLevel(lvl), span=xpStep(lvl);
+    var xpPct=Math.max(0,Math.min(100,Math.round(100*curXp/span)));
+    // fila de notificações do Sistema (ordem: perfeito → nível → rank → títulos)
+    if(session.survival && p>=100 && served>=5) notify("Despertar Perfeito — 完全覚醒.<br>Nenhum erro nesta caçada.<br><span class='note-sub'>+"+bonus+" EXP de bônus</span>");
+    if(events){
+      if(events.levels.length){
+        var fL=events.levels[events.levels.length-1];
+        var b=events.levels.length>1?("Você subiu "+events.levels.length+" níveis → Nível "+fL+"."):("Você subiu para o Nível "+fL+".");
+        notify(b+"<br><span class='note-sub'>+"+totalGain+" EXP nesta caçada</span>");
+      }
+      if(events.rankUp) notify("Rank elevado: "+esc(events.rankUp.from)+" → "+esc(events.rankUp.to)+".<br><span class='note-sub'>"+esc(events.rankUp.label)+"</span>");
+      events.titles.forEach(function(id){ var tt=titleById(id); if(tt) notify("Novo título desbloqueado:<br>「"+esc(tt.text)+"」<br><span class='note-sub'>"+esc(tt.desc)+"</span>"); });
+    }
+    // complemento de título conquistado/aprimorado nesta caçada
+    if(compUp){ var eqt=STATE.equippedTitle?titleById(STATE.equippedTitle):null;
+      notify("Seu título ganhou um complemento:<br>「"+esc((eqt?eqt.text:"")+" · "+SUBT[compUp].n+" "+SUBT[compUp].k)+"」<br><span class='note-sub'>desafios de nível mais alto concluídos</span>"); }
+    var html='<div class="view stack">'
+      +'<div class="sec" style="margin-top:6px"><h3>Resultado</h3><div class="ln"></div></div>'
+      +'<div class="card reveal">'
+        +'<div class="ring-wrap"><div class="ring" id="ring" style="position:relative"><div class="inner">'
+          +'<div><div class="big">'+p+'%</div><div class="cap">precisão</div></div>'
+        +'</div></div></div>'
+        +(goLine?'<div class="res-line" style="margin-top:6px;color:var(--shu);font-weight:700;letter-spacing:.04em">'+esc(goLine)+'</div>':'')
+        +'<div class="res-line"><b>'+c+'</b> acertos · <b>'+(t-c)+'</b> erros · '+t+' questões</div>'
+        +(tierName?'<div class="res-line" style="margin-top:6px;color:var(--sys);font-weight:600">'+esc(tierName)+'</div>':'')
+        +'<div class="res-line" style="margin-top:8px">'+msg+'</div>'
+      +'</div>'
+      +(session.survival
+        ? ('<div class="card system reveal" style="animation-delay:.08s">'
+            +'<div class="kicker">⟦ STATUS ⟧</div>'
+            +'<div class="sys-top"><div class="rankbadge">'+esc(rk.code)+'</div>'
+              +'<div class="sys-id"><div class="level-title" style="font-size:22px">Nível '+lvl+'</div>'
+              +'<div class="level-sub">'+esc(rk.label)+'</div></div></div>'
+            +'<div class="bar matcha"><i id="xpfill2"></i></div>'
+            +'<div class="pct-row"><span>EXP ganho · '+curXp+' / '+span+' p/ próximo nível</span><b>+'+totalGain+'</b></div>'
+          +'</div>')
+        : ('<div class="card reveal" style="animation-delay:.08s;text-align:center">'
+            +'<div class="kicker" style="color:var(--ink2)">⟦ ESTUDO LIVRE ⟧ '+rb("学","がく")+'</div>'
+            +'<div class="res-line" style="margin-top:8px">Modo treino — sem EXP nem títulos.<br>Suas medalhas e atributos continuam evoluindo.</div>'
+          +'</div>'))
+      +'<div class="stack">';
+    if(session.missed.length) html+='<button class="btn ghost" id="revBtn">Revisar erros desta rodada ('+session.missed.length+')</button>';
+    html+='<button class="btn primary" id="againBtn">Jogar de novo</button>'
+      +'<button class="btn ghost mini" id="homeBtn">Início</button>'
+      +'</div></div>';
+    root.innerHTML=html;
+    requestAnimationFrame(function(){
+      var r=document.getElementById("ring"); if(r){ r.style.transition="none"; r.style.setProperty("--p",0);
+        requestAnimationFrame(function(){ r.style.transition="background 1s ease"; r.style.background="conic-gradient(var(--shu) "+p+"%, var(--line) 0)"; }); }
+      var f=document.getElementById("xpfill2"); if(f) f.style.width=xpPct+"%";
+    });
+    var revB=document.getElementById("revBtn"); if(revB) revB.onclick=function(){ reviewList(session.missed); };
+    document.getElementById("againBtn").onclick=startQuiz;
+    document.getElementById("homeBtn").onclick=home;
+    flushNotif();
+  }
+
+  // ---------- REVISÃO ----------
+  function reviewList(list, fromSaved){
+    var html='<div class="view">'
+      +'<div class="qhead"><button class="icon-btn" id="rbk">‹</button>'
+      +'<div style="font-family:var(--display);font-weight:600">Revisão</div>'
+      +'<div style="width:40px"></div></div><div class="rev">';
+    if(!list.length){ html+='<div class="empty">Nada para revisar. 🌿</div>'; }
+    list.forEach(function(m){
+      html+='<div class="item"><div class="rq">'+esc(m.q)+'</div>'
+        +'<div class="ans"><span class="k">Você</span><span class="yours">'+esc(m.your||"—")+'</span></div>'
+        +'<div class="ans" style="margin-top:4px"><span class="k">Correta</span><span class="right">'+esc(m.right)+'</span></div>'
+      +'</div>';
+    });
+    html+='</div></div>';
+    root.innerHTML=html;
+    document.getElementById("rbk").onclick=function(){ fromSaved?home():result(); };
+  }
+  function reviewSaved(){
+    var byId={}; DATA.forEach(function(q){byId[q.i]=q;});
+    var list=STATE.wrongIds.slice().reverse().slice(0,40).map(function(id){var q=byId[id]; return q?{q:q.q, your:null, right:q.o[q.a]}:null;}).filter(Boolean);
+    reviewList(list, true);
+  }
+
+  // ---------- menu de ERROS (filtro + paginação + lista clicável → detalhe) ----------
+  var errState={cat:"all", page:0};
+  var ERR_PER=8; // erros por página
+  function openErrors(){ errState={cat:"all", page:0}; errorsMenu(); }
+  function errorsMenu(){
+    stopTimer();
+    var byId={}; DATA.forEach(function(q){byId[q.i]=q;});
+    var all=STATE.wrongIds.slice().reverse().map(function(id){return byId[id];}).filter(Boolean);
+    var html='<div class="view stack">'
+      +'<div class="qhead"><button class="icon-btn" id="ebk" title="Voltar">‹</button>'
+        +'<div style="font-family:var(--display);font-weight:600;font-size:17px">Meus erros '+rb("誤","あやまり")+'</div>'
+        +'<div style="width:40px"></div></div>';
+    if(!all.length){
+      html+='<div class="empty">Nenhum erro salvo. 🌿<br>Seus tropeços aparecem aqui para revisar.</div>';
+      html+='</div>'; root.innerHTML=html; document.getElementById("ebk").onclick=home; return;
+    }
+    // categorias presentes (com contagem) p/ filtro simplificado
+    var counts={}; all.forEach(function(q){ counts[q.c]=(counts[q.c]||0)+1; });
+    var catsPresent=Object.keys(counts);
+    if(errState.cat!=="all" && catsPresent.indexOf(errState.cat)<0) errState.cat="all";
+    // filtro
+    html+='<div class="errfilter chips">';
+    html+='<button class="chip" data-f="all" aria-pressed="'+(errState.cat==="all"?"true":"false")+'">Todos · '+all.length+'</button>';
+    catsPresent.forEach(function(c){
+      html+='<button class="chip" data-f="'+c+'" aria-pressed="'+(errState.cat===c?"true":"false")+'">'+esc(CATS[c]||c)+' · '+counts[c]+'</button>';
+    });
+    html+='</div>';
+    // lista filtrada + paginada
+    var list = errState.cat==="all" ? all : all.filter(function(q){return q.c===errState.cat;});
+    var pages=Math.max(1, Math.ceil(list.length/ERR_PER));
+    if(errState.page>=pages) errState.page=pages-1; if(errState.page<0) errState.page=0;
+    var start=errState.page*ERR_PER, pageItems=list.slice(start, start+ERR_PER);
+    html+='<div class="errlist" id="errlist">';
+    pageItems.forEach(function(q){
+      html+='<button class="errrow" data-i="'+q.i+'"><span class="tag">'+esc(CATS[q.c]||q.c)+'</span>'
+        +'<span class="errq">'+qFuri(q.q)+'</span><span class="errgo">›</span></button>';
+    });
+    html+='</div>';
+    // paginação
+    if(pages>1){
+      html+='<div class="pager">'
+        +'<button class="pg-btn" id="pgPrev"'+(errState.page<=0?' disabled':'')+'>‹</button>'
+        +'<span class="pg-info">'+(errState.page+1)+' / '+pages+'</span>'
+        +'<button class="pg-btn" id="pgNext"'+(errState.page>=pages-1?' disabled':'')+'>›</button>'
+        +'</div>';
+    }
+    html+='</div>';
+    root.innerHTML=html;
+    document.getElementById("ebk").onclick=home;
+    document.querySelectorAll("#root .errfilter .chip").forEach(function(b){
+      b.onclick=function(){ errState.cat=b.dataset.f; errState.page=0; errorsMenu(); };
+    });
+    var pp=document.getElementById("pgPrev"); if(pp) pp.onclick=function(){ errState.page--; errorsMenu(); };
+    var pn=document.getElementById("pgNext"); if(pn) pn.onclick=function(){ errState.page++; errorsMenu(); };
+    document.querySelectorAll("#root .errrow").forEach(function(b){ b.onclick=function(){ errorDetail(parseInt(b.dataset.i,10)); }; });
+  }
+  function errorDetail(id){
+    var q=null; for(var i=0;i<DATA.length;i++){ if(DATA[i].i===id){ q=DATA[i]; break; } }
+    if(!q){ errorsMenu(); return; }
+    var qcls=q.q.length>34?"q small":"q";
+    var html='<div class="view stack">'
+      +'<div class="qhead"><button class="icon-btn" id="edbk" title="Voltar">‹</button>'
+        +'<div style="font-family:var(--display);font-weight:600">Detalhe do erro</div>'
+        +'<div style="width:40px"></div></div>'
+      +'<div class="card reveal">'
+        +'<div style="padding:0 2px"><span class="tag">'+esc(CATS[q.c]||q.c)+'</span></div>'
+        +'<div class="'+qcls+'" style="margin-top:10px">'+qFuri(q.q)+'</div>'
+        +'<div class="opts" style="margin-top:14px">';
+    q.o.forEach(function(opt,i){
+      html+='<div class="opt '+(i===q.a?"correct":"dim")+'" style="cursor:default">'
+        +'<span class="mk">'+(i===q.a?"✓":"")+'</span><span>'+esc(opt)+'</span></div>';
+    });
+    html+='</div></div>'
+      +'<button class="btn ghost" id="edRemove">Remover dos erros</button>'
+      +'</div>';
+    root.innerHTML=html;
+    document.getElementById("edbk").onclick=errorsMenu;
+    document.getElementById("edRemove").onclick=function(){
+      var p=STATE.wrongIds.indexOf(id); if(p>-1) STATE.wrongIds.splice(p,1); save(); errorsMenu();
+    };
+  }
+
+  // ---------- menu de RECORDES (pontuação por categoria) ----------
+  function recordsMenu(){
+    stopTimer();
+    var html='<div class="view stack">'
+      +'<div class="qhead"><button class="icon-btn" id="rkbk" title="Voltar">‹</button>'
+        +'<div style="font-family:var(--display);font-weight:600;font-size:17px">Recordes '+rb("記録","きろく")+'</div>'
+        +'<div style="width:40px"></div></div>'
+      +'<div class="card reveal" style="text-align:center">'
+        +'<div class="lbl">Maior sequência de acertos</div>'
+        +'<div class="bigscore" style="color:var(--sys)">'+(STATE.stats.best||0)+'</div>'
+      +'</div>';
+    // desafios (flashcards) — pontuação ★
+    html+='<div class="sec"><h3>Desafios '+rb("試","し")+'</h3><div class="ln"></div></div>';
+    html+='<div class="card reveal">';
+    DECKS.forEach(function(d){ var best=(STATE.flash.best||{})[d.id];
+      html+='<div class="recrow"><span class="reck">'+esc(d.k)+'</span><span class="recn">'+esc(d.name)+'</span>'
+        +'<span class="recv'+(best?'':' none')+'">'+(best?("★ "+best):"—")+'</span></div>'; });
+    html+='</div>';
+    // portões (quiz) — melhor precisão
+    html+='<div class="sec"><h3>Portões '+rb("門","もん")+'</h3><div class="ln"></div></div>';
+    html+='<div class="card reveal">';
+    Object.keys(CATS).forEach(function(c){ var tier=subTier(c);
+      html+='<div class="recrow"><span class="reck">'+esc(CAT_K[c]||"・")+'</span><span class="recn">'+esc(CATS[c])+'</span>'
+        +'<span class="recv'+(tier?'':' none')+'">'+(tier?(SUBT[tier].k+" "+SUBT[tier].n):"—")+'</span></div>'; });
+    html+='</div></div>';
+    root.innerHTML=html;
+    document.getElementById("rkbk").onclick=home;
+  }
+
+  // ---------- FLASHCARDS ----------
+  function flashHome(){
+    stopTimer();
+    var html='<div class="view stack">'
+      +'<div class="qhead"><button class="icon-btn" id="fbk" title="Voltar">‹</button>'
+        +'<div style="font-family:var(--display);font-weight:600;font-size:17px">Flashcards '+rb("暗記","あんき")+'</div>'
+        +'<div style="width:40px"></div></div>'
+      +'<p class="flash-intro">Escolha um conjunto. Estude as cartas com furigana e depois encare o Desafio de Memória.</p>'
+      +'<div class="gate-grid" id="deckGrid">';
+    DECKS.forEach(function(d){
+      var best=(STATE.flash.best||{})[d.id];
+      html+='<button class="gate deck" data-d="'+d.id+'">'
+        +'<span class="g-k">'+esc(d.k)+'</span><span class="g-n">'+esc(d.name)+'</span>'
+        +'<span class="deck-score">'+(best?('★ '+best):'★ —')+'</span></button>';
+    });
+    html+='</div>';
+    html+='</div>';
+    root.innerHTML=html;
+    document.getElementById("fbk").onclick=home;
+    document.querySelectorAll("#deckGrid .deck").forEach(function(b){ b.onclick=function(){ flashDeck(b.dataset.d); }; });
+  }
+
+  function flashDeck(id){
+    stopTimer();
+    var d=deckById(id); var best=(STATE.flash.best||{})[id];
+    var html='<div class="view stack">'
+      +'<div class="qhead"><button class="icon-btn" id="fbk" title="Voltar">‹</button>'
+        +'<div style="font-family:var(--display);font-weight:600;font-size:17px">'+esc(d.name)+' '+esc(d.k)+'</div>'
+        +'<div style="width:40px"></div></div>'
+      +'<div class="card system reveal"><div class="kicker">⟦ CONJUNTO ⟧ '+esc(d.k)+'</div>'
+        +'<div class="level-title" style="font-size:23px">'+esc(d.name)+'</div>'
+        +'<div class="level-sub">'+d.cards.length+' cartas'+(best?' · recorde ★ '+best+' pts':'')+'</div></div>'
+      +'<button class="btn primary" id="studyBtn">Estudar '+rb("学","がく")+'</button>'
+      +'<button class="btn ghost" id="gameBtn">Desafio de Memória '+rb("試","し")+'</button>'
+      +'</div>';
+    root.innerHTML=html;
+    document.getElementById("fbk").onclick=flashHome;
+    document.getElementById("studyBtn").onclick=function(){ flashStudy(id); };
+    document.getElementById("gameBtn").onclick=function(){ flashGame(id); };
+  }
+
+  function flashStudy(id){
+    stopTimer();
+    var d=deckById(id), cards=d.cards, i=0;
+    function render(){
+      var c=cards[i];
+      var html='<div class="view">'
+        +'<div class="qhead"><button class="icon-btn" id="fbk" title="Voltar">‹</button>'
+          +'<div style="font-family:var(--display);font-weight:600">'+esc(d.name)+'</div>'
+          +'<div style="font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums">'+(i+1)+' / '+cards.length+'</div></div>'
+        +'<div class="qbar"><i style="width:'+Math.round(100*(i+1)/cards.length)+'%"></i></div>'
+        +'<div class="flip" id="flip"><div class="flip-inner">'
+          +'<div class="flip-face front"><div class="fword plain">'+esc(cardPlain(c))+'</div><div class="ftip">toque para ver a leitura</div></div>'
+          +'<div class="flip-face back"><div class="fword">'+cardRuby(c)+'</div><div class="fpt">'+esc(c.pt)+'</div><div class="ftip">toque para virar</div></div>'
+        +'</div></div>'
+        +'<div class="fnav"><button class="btn ghost mini" id="prevC">‹ Anterior</button>'
+          +'<button class="btn ghost mini" id="nextC">Próxima ›</button></div>'
+        +'</div>';
+      root.innerHTML=html;
+      document.getElementById("fbk").onclick=function(){ flashDeck(id); };
+      var flip=document.getElementById("flip");
+      flip.onclick=function(){ flip.classList.toggle("flipped"); };
+      document.getElementById("prevC").onclick=function(){ i=(i-1+cards.length)%cards.length; render(); };
+      document.getElementById("nextC").onclick=function(){ i=(i+1)%cards.length; render(); };
+    }
+    render();
+  }
+
+  // mini-game: mostra o kanji, escolher a leitura correta; combo + pontos + EXP
+  var fsession=null;
+  function fgOptions(deck, correct){
+    var pool=deck.cards.map(cardReading).filter(function(r){return r!==correct;});
+    pool=pool.filter(function(r,i){return pool.indexOf(r)===i;}); // dedupe
+    var picks=shuffle(pool).slice(0,3);
+    if(picks.length<3){ // completa com leituras de outros conjuntos
+      var g=shuffle(ALL_READINGS.filter(function(r){return r!==correct && picks.indexOf(r)<0;}));
+      for(var k=0;k<g.length && picks.length<3;k++) picks.push(g[k]);
+    }
+    return shuffle([correct].concat(picks));
+  }
+  function flashGame(id){
+    var d=deckById(id), L0=levelFromXp(STATE.xp);
+    fsession={deck:d, cards:shuffle(d.cards), idx:0, correct:0, wrong:0, score:0, combo:0, bestCombo:0,
+      xpGained:0, snap:{level:L0, rank:rankFromLevel(L0).code},
+      timeLeft:SURV.start, endedBy:null, _answered:false};
+    fgRender();
+  }
+  // XP por carta: 1ª vez = base; repetição (após erro) = 5%; sequência de acertos multiplica ×n
+  function flashReward(deckId, c){
+    STATE.flash.cards = STATE.flash.cards || {};
+    var key=deckId+"|"+cardPlain(c);
+    var m=STATE.flash.cards[key] || {seen:false, cs:0};
+    var ns=m.cs+1;
+    var mult=(ns===1)?(m.seen?0.05:1):ns;       // 1ª vez→1×, repetição quebrada→5%, sequência limpa→×n
+    var xp=Math.max(1, Math.round(FLASH_XP*mult));
+    m.cs=ns; m.seen=true; STATE.flash.cards[key]=m;
+    return {xp:xp, mult:mult, streak:ns};
+  }
+  function fgHeader(){
+    var fs=fsession;
+    return '<span class="gold">★ '+fs.score+'</span>'+(fs.combo>1?'<span class="combo">×'+fs.combo+'</span>':'');
+  }
+  function fgRender(){
+    stopTimer();
+    var fs=fsession, c=fs.cards[fs.idx], total=fs.cards.length, n=fs.idx+1;
+    fs._correct=cardReading(c); fs._answered=false;
+    var opts=fgOptions(fs.deck, fs._correct);
+    var html='<div class="view">'
+      +'<div class="qhead"><button class="icon-btn" id="fbk" title="Sair">‹</button>'
+        +'<div class="score" id="fgscore">'+fgHeader()+'</div>'
+        +'<div style="font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums">'+n+' / '+total+'</div></div>'
+      +'<div class="qbar"><i style="width:'+pct(fs.idx,total)+'%"></i></div>'
+      +'<div class="hud">'+timerBarHTML()+'</div>'
+      +'<div style="padding:0 2px"><span class="tag">'+esc(fs.deck.name)+'</span></div>'
+      +'<div class="fgprompt" id="fgprompt"><div class="fword plain">'+esc(cardPlain(c))+'</div><div class="fgask">qual a leitura?</div></div>'
+      +'<div class="opts" id="fgopts">';
+    opts.forEach(function(r,disp){
+      html+='<button class="opt fgopt" data-r="'+esc(r)+'" style="animation-delay:'+(disp*0.05).toFixed(2)+'s"><span>'+esc(r)+'</span></button>';
+    });
+    html+='</div><div class="qfoot" id="fgfoot"></div></div>';
+    root.innerHTML=html;
+    document.getElementById("fbk").onclick=function(){ if(confirm("Sair do desafio? A pontuação desta rodada será perdida.")){ stopTimer(); flashDeck(fs.deck.id); } };
+    document.querySelectorAll("#fgopts .fgopt").forEach(function(b){ b.onclick=function(){ fgAnswer(b.dataset.r, b); }; });
+    startTimer(fs, fgTimeOut);
+  }
+  function fgTimeOut(){
+    if(!fsession || fsession.endedBy) return;
+    fsession.endedBy="time"; fsession._answered=true;
+    var ov=el('<div class="sysmodal"><div class="card system sysnote danger reveal">'
+      +'<div class="kicker">⟦ TEMPO ESGOTADO ⟧ '+rb("時間切れ","じかんぎれ")+'</div>'
+      +'<div class="note-body">O tempo acabou.<br>O desafio termina aqui.</div>'
+      +'<button class="btn primary mini" id="fgToOk">Ver resultado</button></div></div>');
+    document.body.appendChild(ov);
+    ov.querySelector("#fgToOk").onclick=function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); fgResult(); };
+  }
+  function fgPop(txt, ok, combo){
+    var pop=el('<div class="xppop" style="color:'+(ok?"var(--gold)":"var(--shu)")+'">'+esc(txt)+(combo>1?" ×"+combo:"")+'</div>');
+    document.getElementById("app").appendChild(pop);
+    setTimeout(function(){ if(pop.parentNode) pop.parentNode.removeChild(pop); },900);
+  }
+  function fgAnswer(r, btn){
+    var fs=fsession; if(fs._answered) return; fs._answered=true;
+    stopTimer();
+    var c=fs.cards[fs.idx], ok=(r===fs._correct);
+    document.querySelectorAll("#fgopts .fgopt").forEach(function(b){
+      b.setAttribute("disabled","");
+      if(b.dataset.r===fs._correct) b.classList.add("correct");
+      else if(b===btn) b.classList.add("wrong");
+      else b.classList.add("dim");
+    });
+    // XP de maestria + pontuação
+    var xpInfo={xp:0,mult:0,streak:0}, pts=0;
+    if(ok){ fs.combo++; if(fs.combo>fs.bestCombo) fs.bestCombo=fs.combo;
+      // pontuação = (tempo restante + nº da sequência) × 2
+      pts=(Math.ceil(Math.max(0,fs.timeLeft))+fs.combo)*2; fs.score+=pts; fs.correct++;
+      xpInfo=flashReward(fs.deck.id, c);
+      STATE.xp+=xpInfo.xp; fs.xpGained+=xpInfo.xp; fgPop("+"+pts, true, fs.combo);
+    } else { fs.combo=0; fs.wrong++;
+      // erro zera a sequência de maestria da carta
+      var keyw=fs.deck.id+"|"+cardPlain(c); var mw=STATE.flash.cards[keyw]||{seen:false,cs:0}; mw.cs=0; mw.seen=true; STATE.flash.cards[keyw]=mw;
+      fgPop("errou", false, 0); }
+    // reflete no Status (atributos / áreas)
+    var cat=DECK_CAT[fs.deck.id]||"vocab";
+    var st=STATE.stats; st.answered++; var bc=st.byCat[cat]||{a:0,c:0}; bc.a++;
+    if(ok){ st.correct++; bc.c++; } else { st.wrong++; }
+    st.byCat[cat]=bc;
+    // revela furigana na carta + feedback de XP/maestria
+    var prompt=document.getElementById("fgprompt");
+    if(prompt){
+      var note = ok ? ('+'+xpInfo.xp+' XP'+(xpInfo.mult>=2?' · maestria ×'+xpInfo.streak:(xpInfo.mult<1?' · revisão':''))) : '';
+      prompt.innerHTML='<div class="fword">'+cardRuby(c)+'</div><div class="fpt">'+esc(c.pt)+'</div>'
+        +(note?'<div class="fgxp">'+note+'</div>':'');
+    }
+    // temporizador: +ganho no acerto, −perda no erro
+    var delta = ok ? SURV.gain : -SURV.loss;
+    fs.timeLeft = Math.max(0, Math.min(SURV.max, fs.timeLeft + delta));
+    updateTimer(); timePop(delta);
+    var dead = fs.timeLeft<=0;
+    save();
+    var sc=document.getElementById("fgscore"); if(sc) sc.innerHTML=fgHeader();
+    var last=fs.idx>=fs.cards.length-1;
+    var foot=document.getElementById("fgfoot");
+    var label = dead ? "Fim — ver resultado" : (last?"Ver resultado":"Próxima ›");
+    foot.innerHTML='<button class="btn '+((ok&&!dead)?"ghost":"primary")+'" id="fgnext">'+label+'</button>';
+    document.getElementById("fgnext").classList.add("reveal");
+    document.getElementById("fgnext").onclick=function(){
+      if(dead){ fs.endedBy="time"; fgResult(); }
+      else if(last){ fgResult(); }
+      else { fs.idx++; fgRender(); }
+    };
+  }
+  function fgResult(){
+    stopTimer();
+    var fs=fsession, total=fs.correct+fs.wrong, c=fs.correct, p=pct(c,total);
+    var goLine = fs.endedBy==="time" ? "⟦ TEMPO ESGOTADO ⟧ 時間切れ" : "";
+    var bonus = total>=6 ? (p>=100?20 : p>=80?10 : 3) : 0;
+    STATE.xp+=bonus; var totalGain=fs.xpGained+bonus;
+    STATE.flash.best=STATE.flash.best||{};
+    var prevBest=STATE.flash.best[fs.deck.id]||0, isRecord=fs.score>prevBest;
+    if(isRecord) STATE.flash.best[fs.deck.id]=fs.score;
+    var events=syncProgress(fs.snap); save();
+    var lvl=STATE.level, rk=rankFromLevel(lvl);
+    var curXp=STATE.xp-xpForLevel(lvl), span=xpStep(lvl);
+    var xpPct=Math.max(0,Math.min(100,Math.round(100*curXp/span)));
+    var msg = p>=90?"Memória afiada! 🌸" : p>=70?"Bom — os selos estão fixando." : p>=40?"Continue revisando o conjunto." : "Estude as cartas e tente de novo.";
+    if(events){
+      if(events.levels.length){ var fL=events.levels[events.levels.length-1];
+        notify((events.levels.length>1?("Você subiu "+events.levels.length+" níveis → Nível "+fL+"."):("Você subiu para o Nível "+fL+"."))+"<br><span class='note-sub'>+"+totalGain+" EXP no desafio</span>"); }
+      if(events.rankUp) notify("Rank elevado: "+esc(events.rankUp.from)+" → "+esc(events.rankUp.to)+".<br><span class='note-sub'>"+esc(events.rankUp.label)+"</span>");
+      events.titles.forEach(function(id){ var tt=titleById(id); if(tt) notify("Novo título desbloqueado:<br>「"+esc(tt.text)+"」<br><span class='note-sub'>"+esc(tt.desc)+"</span>"); });
+    }
+    var html='<div class="view stack">'
+      +'<div class="sec" style="margin-top:6px"><h3>Desafio · '+esc(fs.deck.name)+'</h3><div class="ln"></div></div>'
+      +'<div class="card reveal">'
+        +'<div class="bigscore">★ '+fs.score+'</div>'
+        +(goLine?'<div class="res-line" style="margin-top:6px;color:var(--shu);font-weight:700;letter-spacing:.04em">'+esc(goLine)+'</div>':'')
+        +'<div class="res-line" style="margin-top:8px"><b>'+c+'</b>/'+total+' leituras · precisão '+p+'% · melhor combo ×'+fs.bestCombo+'</div>'
+        +(isRecord?'<div style="text-align:center"><span class="recbadge">novo recorde 記録</span></div>':'')
+        +'<div class="res-line" style="margin-top:8px">'+msg+'</div>'
+      +'</div>'
+      +'<div class="card system reveal" style="animation-delay:.08s">'
+        +'<div class="kicker">⟦ STATUS ⟧</div>'
+        +'<div class="sys-top"><div class="rankbadge">'+esc(rk.code)+'</div>'
+          +'<div class="sys-id"><div class="level-title" style="font-size:22px">Nível '+lvl+'</div>'
+          +'<div class="level-sub">'+esc(rk.label)+'</div></div></div>'
+        +'<div class="bar matcha"><i id="xpfill3"></i></div>'
+        +'<div class="pct-row"><span>EXP ganho · '+curXp+' / '+span+' p/ próximo nível</span><b>+'+totalGain+'</b></div>'
+      +'</div>'
+      +'<button class="btn primary" id="againG">Jogar de novo</button>'
+      +'<button class="btn ghost" id="otherG">Outro conjunto</button>'
+      +'<button class="btn ghost mini" id="homeG">Início</button>'
+      +'</div>';
+    root.innerHTML=html;
+    requestAnimationFrame(function(){ var f=document.getElementById("xpfill3"); if(f) f.style.width=xpPct+"%"; });
+    document.getElementById("againG").onclick=function(){ flashGame(fs.deck.id); };
+    document.getElementById("otherG").onclick=flashHome;
+    document.getElementById("homeG").onclick=home;
+    flushNotif();
+  }
+
+  // ---------- boot ----------
+  if(!DATA.length){
+    root.innerHTML='<div class="err"><p><b>Não encontrei as perguntas.</b></p><p>O arquivo <code>data.js</code> precisa estar na mesma pasta que <code>index.html</code>.</p></div>';
+  } else {
+    home();
+  }
+
+  // ---------- service worker (offline quando hospedado em http/https) ----------
+  if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>
