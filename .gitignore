@@ -1,0 +1,9 @@
+# backup do banco antigo (não faz parte do app)
+data.old.js
+# pacotes/arquivos locais
+*.zip
+# lixo de SO
+.DS_Store
+Thumbs.db
+# mensagens de commit temporárias
+.gitmsg.tmp

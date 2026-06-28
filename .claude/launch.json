@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "n5-quiz",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8099"],
+      "port": 8099
+    },
+    {
+      "name": "n5-quiz-fresh",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8101"],
+      "port": 8101
+    }
+  ]
+}
